@@ -289,4 +289,5 @@
   background-color: #f0f0f0; /* Optional: Gives a background color to the paragraph */
   border: 1px solid #ddd; /* Optional: Adds a border for visibility */
   line-height: 1.6; /* Optional: Increases line height for better readability */
+border-radius: 10px;
 }
