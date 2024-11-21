@@ -240,10 +240,16 @@
   .d{
     border: 1px black;
   }
+    .card-text{
+    text-align: center;
+  }
 }  
 @media (max-width: 486px) {
   /* Stack the navbar items vertically */
   .d{
     border: 1px black;
+  }
+    .card-text{
+    text-align: center;
   }
 } 
