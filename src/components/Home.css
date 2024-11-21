@@ -163,7 +163,6 @@
     }
     .home-title {
       font-size: 2rem; /* Smaller title on small screens */
-      margin-top: 80px; /* Reduce top margin to bring it closer to the top */
       line-break: 30px;
     }
   
