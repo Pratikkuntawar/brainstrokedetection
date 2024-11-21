@@ -243,6 +243,15 @@
     .card-text{
     text-align: center;
   }
+
+    .heading{
+    font-size: 2rem;
+    color: #1A535C; /* Dark teal for a calm effect */
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+  }
 }  
 @media (max-width: 486px) {
   /* Stack the navbar items vertically */
@@ -250,6 +259,15 @@
     border: 1px black;
   }
     .card-text{
+    text-align: center;
+  }
+
+    .heading{
+    font-size: 2rem;
+    color: #1A535C; /* Dark teal for a calm effect */
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
     text-align: center;
   }
 } 
