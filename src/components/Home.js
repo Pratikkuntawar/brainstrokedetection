@@ -47,7 +47,7 @@ const Home = () => {
   return (
     <div className="home-container" style={{ backgroundImage: `url(${brainStrokeImage})` }}>
       <div className="overlay">
-        <h1 className="home-title">Brain Stroke Analysis Based on CT Scan Images</h1>
+        <h1 className="home-title">Brain Stroke Analysis Based on MRI Images</h1>
         <p className="home-description">{description}</p>
         <button className="upload-button" onClick={handleUploadClick}>Upload CT Scan</button>
       </div>
