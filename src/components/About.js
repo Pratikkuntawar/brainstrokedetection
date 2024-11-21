@@ -29,7 +29,7 @@ function About() {
      
       <div className='row'>
         {/* Left Card: Ischemic Stroke */}
-        <div className='col-lg-6 mb-4'>
+        <div className='col-lg-6 mb-4 textcontainer'>
           <div className="card">
             <div className="card-body">
               <h2 className="card-title">Ischemic Stroke</h2>
