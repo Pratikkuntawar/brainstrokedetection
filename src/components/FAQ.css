@@ -69,3 +69,22 @@
         margin-bottom: 8px; /* Reduce space between items */
     }
 }
+/* Override the default Bootstrap style for expanded accordion buttons */
+.accordion-button:not(.collapsed) {
+  background-color: transparent !important; /* Remove the background color */
+  color: black !important; /* Keep text color black */
+  box-shadow: none !important; /* Remove any shadow */
+}
+
+/* Ensure the button is transparent even when focused or active */
+.accordion-button:focus {
+  background-color: transparent !important; /* No background color when focused */
+  box-shadow: none !important; /* Remove the box shadow */
+}
+
+/* Optionally, remove the border and background color for collapsed accordion items */
+.accordion-button.collapsed {
+  background-color: transparent !important; /* No background color when collapsed */
+  color: black !important; /* Ensure text remains black */
+  border: none !important; /* Remove border */
+}
