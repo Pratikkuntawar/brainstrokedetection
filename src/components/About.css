@@ -271,3 +271,22 @@
     text-align: center;
   }
 } 
+
+/* Ensures the container spans the full width of the screen */
+.textcontainer {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px; /* Optional: Adds padding inside the container */
+  display: flex; /* Ensures the children elements are aligned properly */
+  justify-content: flex-start; /* Aligns items to the start of the container */
+}
+
+/* Ensures the content of the paragraph takes up the full width */
+.card-text {
+  width: 100%; /* Ensures the paragraph spans the full width of the container */
+  box-sizing: border-box; /* Includes padding in the element’s width */
+  padding: 10px; /* Adds space inside the paragraph (optional) */
+  background-color: #f0f0f0; /* Optional: Gives a background color to the paragraph */
+  border: 1px solid #ddd; /* Optional: Adds a border for visibility */
+  line-height: 1.6; /* Optional: Increases line height for better readability */
+}
