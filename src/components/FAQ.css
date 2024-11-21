@@ -1,0 +1,71 @@
+.faq-container {
+    margin: 20px;
+    width:1000px;
+  }
+  
+  .faq-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .accordion-button {
+    background-color: transparent !important; /* No background color */
+    color: black !important; /* Ensure question text remains black */
+    border: none; /* Remove button border */
+    font-weight: bold; /* Make the question bold */
+    transition: background-color 0.3s; /* Smooth transition */
+  }
+  
+  .accordion-button:not(.collapsed) {
+    background-color: #007bff; /* Active color */
+    color: white; /* Active text color */
+  }
+  
+  .accordion-item {
+    margin-bottom: 10px; /* Space between items */
+  }
+  .accordion-body {
+    text-align: justify; /* Justify the content of the answer */
+    /*font-weight: bold;*/
+    opacity: 0.5;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  .faq-container {
+    margin-top: 200px;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  @media (max-width: 768px) {
+    .faq-container {
+        margin: 10px; /* Reduce margin */
+        padding: 15px; /* Reduce padding */
+        width: 100%; /* Use full width on small screens */
+    }
+
+    .faq-title {
+        font-size: 1.8rem; /* Smaller title on small screens */
+        margin-bottom: 15px; /* Adjust margin */
+    }
+
+    .accordion-button {
+        font-size: 1rem; /* Smaller font size for questions */
+        padding: 10px; /* Adjust button padding */
+    }
+
+    .accordion-body {
+        padding: 10px; /* Reduce padding in the answer section */
+        font-size: 0.9rem; /* Smaller font size for answers */
+    }
+
+    .accordion-item {
+        margin-bottom: 8px; /* Reduce space between items */
+    }
+}

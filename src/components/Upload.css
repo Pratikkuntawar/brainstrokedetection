@@ -1,0 +1,70 @@
+
+    .upload-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .upload-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #120be8;
+  }
+  
+  .instructions h3 {
+    margin-top: 15px;
+    color: #444444;;
+  }
+  
+  .instructions ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .upload-input {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  input[type="file"] {
+    margin: 10px 0;
+  }
+  
+  .analysis-message {
+    text-align: center;
+    margin-top: 20px;
+    color: #28a745;
+    font-size: 18px;
+    font-weight: bold;
+  } 
+  .image-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centers content horizontally */
+    justify-content: center; /* Centers content vertically */
+    margin-top: 50px;
+    height: 300px; /* Optional height to make the area noticeable */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+
+  .image-preview {
+    width: 100%;             /* Make image responsive */
+    width: 291px;         /* Maximum width of image */
+    height: 291px;             /* Maintain aspect ratio */
+    border-radius: 8px;       /* Add rounded corners */
+    object-fit: contain;      /* Maintain aspect ratio without cropping */
+    margin-top: 10px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  }
+  .upload-btn{
+    background-color: #ff0000; /* Blue background */
+    color: #ffffff;
+  }
+  .instructions {
+    margin-top: 50px; /* Optional: add some margin on top of the instructions */
+  }

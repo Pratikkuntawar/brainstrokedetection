@@ -1,0 +1,98 @@
+/* Navbar.css */
+
+/* Logo hover effect */
+.logo-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo-hover:hover {
+  transform: scale(1.1); /* Slight zoom-in effect */
+}
+
+/* Brand name styling */
+.brand-name {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Navbar item hover effect */
+.nav-hover {
+  position: relative;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-hover:hover {
+  color: #ffcc00; /* Change color on hover */
+}
+
+.nav-hover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ffcc00;
+  transition: width 0.4s ease-in-out;
+}
+
+.nav-hover:hover::after {
+  width: 100%; /* Underline effect expands on hover */
+}
+
+/* Adjust active class styling */
+.nav-link.active {
+  font-weight: bold;
+  color: #ffcc00 !important; /* Active link color */
+  border-bottom: 2px solid #ffcc00; /* Add underline */
+}
+
+/* Mobile navbar shadow */
+.navbar {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+}
+/* Responsive styles */
+.navb{
+  width:100%;
+}
+@media (max-width: 768px) {
+  /* Stack the navbar items vertically */
+  .navbar-nav {
+    flex-direction: column; /* Change direction to column */
+    align-items: center; /* Center the items */
+  }
+
+  .nav-item {
+    margin: 10px 0; /* Add spacing between items */
+  }
+
+  /* Adjust brand name size on small screens */
+  .brand-name {
+    font-size: 1.5rem; /* Smaller font size */
+    
+  }
+
+  /* Toggler button styles */
+  .navbar-toggler {
+    border-color: #ffcc00; /* Change the border color */
+  }
+
+  .navbar-toggler-icon {
+    background-color: #ffcc00; /* Change the icon color */
+    background-color: black;
+  }
+  .brand-name {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+    width: 60%; /* Adjust this percentage as needed */
+    max-width: 300px; /* Optional: Set a max width */
+    margin: 0 auto; /* Center the brand name */
+    margin-left: 0px;
+  }
+  img{
+    width: 70px;
+    height: 50px;
+    display: none;
+  }
+}
