@@ -233,102 +233,103 @@
 
 // export default Upload;
 // import React, { useState } from "react";
-import React, { useState } from "react";
-import "./Upload.css"; // Ensure you have the corresponding CSS file
+//this is 1st version
+// import React, { useState } from "react";
+// import "./Upload.css"; // Ensure you have the corresponding CSS file
 
-const Upload = () => {
-    const [file, setFile] = useState(null);
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
+// const Upload = () => {
+//     const [file, setFile] = useState(null);
+//     const [response, setResponse] = useState(null);
+//     const [error, setError] = useState(null);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+//     const handleFileChange = (e) => {
+//         setFile(e.target.files[0]);
+//     };
 
-    const handleUpload = async () => {
-        if (!file) {
-            alert("Please select a file first!");
-            return;
-        }
+//     const handleUpload = async () => {
+//         if (!file) {
+//             alert("Please select a file first!");
+//             return;
+//         }
 
-        const formData = new FormData();
-        formData.append("file", file);
+//         const formData = new FormData();
+//         formData.append("file", file);
 
-        try {
-            const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
-                method: "POST",
-                body: formData,
-            });
+//         try {
+//             const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
+//                 method: "POST",
+//                 body: formData,
+//             });
 
-            if (!res.ok) {
-                throw new Error(`Error: ${res.status} ${res.statusText}`);
-            }
+//             if (!res.ok) {
+//                 throw new Error(`Error: ${res.status} ${res.statusText}`);
+//             }
 
-            const data = await res.json();
-            setResponse(data);
-            setError(null);
-        } catch (err) {
-            setError(err.message);
-            setResponse(null);
-        }
-    };
+//             const data = await res.json();
+//             setResponse(data);
+//             setError(null);
+//         } catch (err) {
+//             setError(err.message);
+//             setResponse(null);
+//         }
+//     };
 
-    const getPredictionLabel = (predictedClass) => {
-        switch (predictedClass) {
-            case 0:
-                return "Hemorrhagic Stroke";
-            case 1:
-                return "Ischemic Stroke";
-            case 2:
-                return "Normal Brain";
-            default:
-                return "Unknown";
-        }
-    };
+//     const getPredictionLabel = (predictedClass) => {
+//         switch (predictedClass) {
+//             case 0:
+//                 return "Hemorrhagic Stroke";
+//             case 1:
+//                 return "Ischemic Stroke";
+//             case 2:
+//                 return "Normal Brain";
+//             default:
+//                 return "Unknown";
+//         }
+//     };
 
-    return (
-        <div className="upload-container">
-            <h2 className="upload-title">Upload MRI Image for Analysis</h2>
+//     return (
+//         <div className="upload-container">
+//             <h2 className="upload-title">Upload MRI Image for Analysis</h2>
 
-            <div className="instructions">
-                <h3>Instructions:</h3>
-                <ul>
-                    <li><strong>Supported formats:</strong> JPEG, PNG</li>
-                    <li><strong>Maximum file size:</strong> 10 MB</li>
-                    <li><strong>Ensure the image is focused and clear for accurate analysis.</strong></li>
-                </ul>
-            </div>
+//             <div className="instructions">
+//                 <h3>Instructions:</h3>
+//                 <ul>
+//                     <li><strong>Supported formats:</strong> JPEG, PNG</li>
+//                     <li><strong>Maximum file size:</strong> 10 MB</li>
+//                     <li><strong>Ensure the image is focused and clear for accurate analysis.</strong></li>
+//                 </ul>
+//             </div>
 
-            <div className="upload-input">
-                <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
-                <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
-            </div>
+//             <div className="upload-input">
+//                 <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
+//                 <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
+//             </div>
 
-            {file && (
-                <div className="image-preview" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", textAlign: "center", marginTop: "10px" }}>
-                    <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" style={{ maxWidth: "100%", height: "450px", display: "block", margin: "0 auto", animation: "pulse 1.5s infinite alternate" }} />
-                    <button className="upload-btn" onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
-                </div>
-            )}
+//             {file && (
+//                 <div className="image-preview" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", textAlign: "center", marginTop: "10px" }}>
+//                     <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" style={{ maxWidth: "100%", height: "450px", display: "block", margin: "0 auto", animation: "pulse 1.5s infinite alternate" }} />
+//                     <button className="upload-btn" onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
+//                 </div>
+//             )}
 
-            {error && (
-                <div className="error-message">
-                    <h3>Error:</h3>
-                    <p>{error}</p>
-                </div>
-            )}
+//             {error && (
+//                 <div className="error-message">
+//                     <h3>Error:</h3>
+//                     <p>{error}</p>
+//                 </div>
+//             )}
 
-            {response && (
-                <div className="result-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", marginTop: "10px" }}>
-                    <strong>Result of Brain Stroke Prediction:</strong>
-                    <span style={{ marginTop: "10px", fontSize: "1.2rem", fontWeight: "bold" }}>{getPredictionLabel(response.predicted_class)}</span>
-                </div>
-            )}
-        </div>
-    );
-};
+//             {response && (
+//                 <div className="result-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", marginTop: "10px" }}>
+//                     <strong>Result of Brain Stroke Prediction:</strong>
+//                     <span style={{ marginTop: "10px", fontSize: "1.2rem", fontWeight: "bold" }}>{getPredictionLabel(response.predicted_class)}</span>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
 
-export default Upload;
+// export default Upload;
 // import React, { useState } from 'react';
 // import './Upload.css'; // Custom CSS for styling
 
@@ -456,4 +457,115 @@ export default Upload;
 // }
 
 // export default Upload;
+
+
+
+
+
+
+
+
+
+// this is second version
+import React, { useState } from "react";
+import "./Upload.css"; // Ensure you have the corresponding CSS file
+
+const Upload = () => {
+    const [file, setFile] = useState(null);
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+
+        if (selectedFile) {
+            setFile(selectedFile);
+        }
+    };
+
+    const handleUpload = async () => {
+        if (!file) {
+            alert("Please select a file first!");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!res.ok) {
+                throw new Error(`Error: ${res.status} ${res.statusText}`);
+            }
+
+            const data = await res.json();
+            setResponse(data);
+            setError(null);
+        } catch (err) {
+            setError(err.message);
+            setResponse(null);
+        }
+    };
+
+    const getPredictionLabel = (predictedClass) => {
+        switch (predictedClass) {
+            case 0:
+                return "Hemorrhagic Stroke";
+            case 1:
+                return "Ischemic Stroke";
+            case 2:
+                return "Normal Brain";
+            default:
+                return "Unknown";
+        }
+    };
+
+    return (
+        <div className="upload-container">
+            <h2 className="upload-title">Upload MRI Image for Analysis</h2>
+
+            <div className="instructions">
+                <h3>Instructions:</h3>
+                <ul>
+                    <li><strong>Supported formats:</strong> JPEG, PNG</li>
+                    <li><strong>Required image size:</strong> 512 x 512</li>
+                    <li><strong>Maximum file size:</strong> 10 MB</li>
+                </ul>
+            </div>
+
+            <div className="upload-input">
+                <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
+                <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
+            </div>
+
+            {file && (
+                <div className="image-preview">
+                    <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
+                </div>
+            )}
+
+            {file && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+
+            {error && (
+                <div className="error-message">
+                    <h3>Error:</h3>
+                    <p>{error}</p>
+                </div>
+            )}
+
+            {response && (
+                <div className="result-container">
+                    <strong>Result of Brain Stroke Prediction:</strong>
+                    <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default Upload;
 
