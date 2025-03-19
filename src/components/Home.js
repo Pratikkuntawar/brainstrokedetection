@@ -49,7 +49,7 @@ const Home = () => {
       <div className="overlay">
         <h1 className="home-title">Brain Stroke Analysis Based on MRI Images</h1>
         <p className="home-description">{description}</p>
-        <button className="upload-button" onClick={handleUploadClick}>Upload CT Scan</button>
+        <button className="upload-button" onClick={handleUploadClick}>Upload MRI</button>
       </div>
     </div>
   );
