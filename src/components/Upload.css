@@ -68,3 +68,29 @@
   .instructions {
     margin-top: 50px; /* Optional: add some margin on top of the instructions */
   }
+  @keyframes glow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+    }
+}
+
+.preview-img {
+  max-width: 100%;
+  height: 450px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 4px solid black; /* Simple black border */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for emphasis */
+  transition: transform 0.3s ease-in-out;
+}
+
+.preview-img:hover {
+  transform: scale(1.05);
+}
