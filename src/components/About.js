@@ -1,3 +1,142 @@
+// import React from 'react';
+// import strokeImage from '../images/stroke_image.jpg'; // Replace with your stroke image
+// import './About.css'; // Make sure this path is correct
+
+// function About() {
+//   return (
+//     <div className='container mt-5'>
+//       <div className='row'>
+//         {/* Left Column: Brain Stroke Definition */}
+//         <div className='col-lg-6 text-container'>
+//           <h2 className="heading">What is Brain Stroke?</h2>
+//           <p className="definition">
+     
+//             A brain stroke occurs when there is an interruption of blood supply to the brain, leading to brain cell death. This interruption can result from a blockage in a blood vessel (ischemic stroke) or a rupture of a blood vessel (hemorrhagic stroke). Ischemic strokes account for about 87% of strokes and can occur due to blood clots forming in arteries (thrombotic stroke) or traveling from other body parts (embolic stroke). In contrast, hemorrhagic strokes occur when a blood vessel bursts, causing bleeding in or around the brain, often linked to high blood pressure or aneurysms. A transient ischemic attack (TIA), or "mini-stroke," is a temporary interruption of blood flow that may last only a few minutes without permanent damage, yet it serves as a crucial warning sign.
+//           </p>
+//         </div>
+
+//         {/* Right Column: Image */}
+//         <div className='col-lg-6 image-container d-flex justify-content-center'>
+//           <img 
+//             src={strokeImage} 
+//             alt='Brain Stroke Illustration' 
+//             className='img-fluid rounded'
+//           />
+//         </div>
+//       </div>
+
+//        <h2 id="h2">Types Of Brain Strokes</h2>
+     
+//       <div className='row'>
+//         {/* Left Card: Ischemic Stroke */}
+//         <div className='col-lg-6 mb-4 textcontainer'>
+//           <div className="card">
+//             <div className="card-body">
+//               <h2 className="card-title">Ischemic Stroke</h2>
+//               <p className="card-text">
+//                 An ischemic stroke occurs when a blood vessel supplying blood to the brain is obstructed. This can happen due to blood clots forming in the arteries (thrombotic stroke) or clots traveling from other parts of the body (embolic stroke). Ischemic strokes account for approximately 87% of all strokes. The lack of blood flow can lead to brain cell death, and timely treatment is essential to restore blood supply and minimize damage.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Right Card: Hemorrhagic Stroke */}
+//         <div className='col-lg-6 mb-4'>
+//           <div className="card ">
+//             <div className="card-body ">
+//               <h2 className="card-title ">Hemorrhagic Stroke</h2>
+//               <p className="card-text ">
+//                 A hemorrhagic stroke occurs when a blood vessel in the brain bursts, leading to bleeding in or around the brain. This type of stroke can result from high blood pressure, aneurysms, or arteriovenous malformations (AVMs). The bleeding puts pressure on surrounding brain tissue, causing damage and impairing function. Immediate medical intervention is critical to manage bleeding and reduce complications.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       <h2 className=" symptoms text-center mb-4">Symptoms of Brain Stroke</h2>
+//       <div className='row'>
+//         {/* Row 1: Symptoms 1, 2, and 3 */}
+//         <div className='col-lg-4 mb-4'>
+//           <div className="card d">
+//             <div className="card-body b">
+//               <h5 className="card-title t1">Sudden Numbness</h5>
+//               <p className="card-text t2">
+//                 Sudden numbness or weakness in the face, arm, or leg, especially on one side of the body.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className='col-lg-4 mb-4'>
+//           <div className="card d">
+//             <div className="card-body b">
+//               <h5 className="card-title t1">Confusion</h5>
+//               <p className="card-text 2">
+//                 Sudden confusion, trouble speaking, or difficulty understanding as well as listening  speech.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className='col-lg-4 mb-4'>
+//           <div className="card d">
+//             <div className="card-body b">
+//               <h5 className="card-title t1">Vision Problems</h5>
+//               <p className="card-text t2">
+//                 Sudden trouble seeing in one or both eyes, such as blurry or double vision which is significant symptom of stroke.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className='row'>
+//         {/* Row 2: Symptoms 4, 5, and 6 */}
+//         <div className='col-lg-4 mb-4'>
+//           <div className="card d">
+//             <div className="card-body b">
+//               <h5 className="card-title t1">Walking Difficulties</h5>
+//               <p className="card-text t2">
+//               Sudden dizziness, loss of balance, and impaired coordination can hinder walking and risk injuries.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className='col-lg-4 mb-4'>
+//           <div className="card d">
+//             <div className="card-body b1">
+//               <h5 className="card-title t1">Severe Headache</h5>
+//               <p className="card-text t2">
+//                 Sudden severe headache with no known cause, which may indicate a hemorrhagic stroke.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className='col-lg-4 mb-4'>
+//           <div className="card d">
+//             <div className="card-body b">
+//               <h5 className="card-title t1">Face Drooping</h5>
+//               <p className="card-text t2">
+//                 One side of the face may droop or feel numb; ask the person to smile to check for asymmetry.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//     </div>
+     
+//   );
+// }
+
+// export default About;
+
+
+
+
+
 import React from 'react';
 import strokeImage from '../images/stroke_image.jpg'; // Replace with your stroke image
 import './About.css'; // Make sure this path is correct
@@ -71,7 +210,7 @@ function About() {
           <div className="card d">
             <div className="card-body b">
               <h5 className="card-title t1">Confusion</h5>
-              <p className="card-text 2">
+              <p className="card-text t2">
                 Sudden confusion, trouble speaking, or difficulty understanding as well as listening  speech.
               </p>
             </div>
@@ -83,7 +222,7 @@ function About() {
             <div className="card-body b">
               <h5 className="card-title t1">Vision Problems</h5>
               <p className="card-text t2">
-                Sudden trouble seeing in one or both eyes, such as blurry or double vision which is significant symptom of stroke.
+                Sudden trouble seeing in one or both eyes is significant symptom of stroke.
               </p>
             </div>
           </div>
@@ -132,12 +271,6 @@ function About() {
 }
 
 export default About;
-
-
-
-
-
-
 
 
 // import React from 'react';
