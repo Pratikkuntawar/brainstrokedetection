@@ -1,78 +1,144 @@
-import React, { useState } from 'react';
-import './Upload.css'; // Custom CSS for styling
+// import React, { useState } from 'react';
+// import './Upload.css'; // Custom CSS for styling
 
-function Upload() {
-  const [image, setImage] = useState(null);
-  const [error, setError] = useState('');
-  const maxFileSize = 10 * 1024 * 1024; // 10MB
+// function Upload() {
+//   const [image, setImage] = useState(null);
+//   const [error, setError] = useState('');
+//   const maxFileSize = 10 * 1024 * 1024; // 10MB
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+//   const handleFileChange = (event) => {
+//     const file = event.target.files[0];
 
-    if (file) {
-      if (file.size > maxFileSize) {
-        setError('File size exceeds 10 MB. Please upload a smaller file.');
-        setImage(null);
-      } else {
-        setError('');
-        setImage(URL.createObjectURL(file)); // Set preview image
-      }
-    } else {
-      setImage(null);
-    }
-  };
+//     if (file) {
+//       if (file.size > maxFileSize) {
+//         setError('File size exceeds 10 MB. Please upload a smaller file.');
+//         setImage(null);
+//       } else {
+//         setError('');
+//         setImage(URL.createObjectURL(file)); // Set preview image
+//       }
+//     } else {
+//       setImage(null);
+//     }
+//   };
 
-  // Function to trigger file input click
-  const triggerFileInput = () => {
-    document.getElementById('file-upload').click();
-  };
+//   // Function to trigger file input click
+//   const triggerFileInput = () => {
+//     document.getElementById('file-upload').click();
+//   };
 
-  return (
-    <div className="upload-container">
-      <h2 className="upload-title">Upload MRI Image for Analysis</h2>
+//   return (
+//     <div className="upload-container">
+//       <h2 className="upload-title">Upload MRI Image for Analysis</h2>
 
-      <div className="instructions">
-        <h3>Instructions:</h3>
-        <ul>
-          <li><strong>Supported formats:</strong> JPEG, PNG</li>
-          <li><strong>Maximum file size:</strong> 10 MB</li>
-          <li><strong>Ensure the image is focused and clear for accurate analysis.</strong></li>
-        </ul>
-      </div>
+//       <div className="instructions">
+//         <h3>Instructions:</h3>
+//         <ul>
+//           <li><strong>Supported formats:</strong> JPEG, PNG</li>
+//           <li><strong>Maximum file size:</strong> 10 MB</li>
+//           <li><strong>Ensure the image is focused and clear for accurate analysis.</strong></li>
+//         </ul>
+//       </div>
 
-      <div className="upload-input">
-        {/* Hidden File Input */}
-        <input
-          id="file-upload"
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          onChange={handleFileChange}
-          style={{ display: 'none' }} // Hide the file input
-        />
+//       <div className="upload-input">
+//         {/* Hidden File Input */}
+//         <input
+//           id="file-upload"
+//           type="file"
+//           accept=".jpg,.jpeg,.png"
+//           onChange={handleFileChange}
+//           style={{ display: 'none' }} // Hide the file input
+//         />
         
-        {/* Button to Trigger File Input */}
-        <button className="upload-btn" onClick={triggerFileInput}>
-          Select Image
-        </button>
-      </div>
+//         {/* Button to Trigger File Input */}
+//         <button className="upload-btn" onClick={triggerFileInput}>
+//           Select Image
+//         </button>
+//       </div>
 
-      {error && <p className="error-message">{error}</p>}
+//       {error && <p className="error-message">{error}</p>}
 
-      {image && (
-        <div className="image-preview-container">
-          <h4>Image Preview:</h4>
-          <img src={image} alt="Uploaded MRI" className="image-preview" />
-          <p className="analysis-message">
-            <strong>Here is the complete analysis of your image.</strong>
-          </p>
+//       {image && (
+//         <div className="image-preview-container">
+//           <h4>Image Preview:</h4>
+//           <img src={image} alt="Uploaded MRI" className="image-preview" />
+//           <p className="analysis-message">
+//             <strong>Here is the complete analysis of your image.</strong>
+//           </p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default Upload;
+
+import React, { useState } from "react";
+
+const Upload = () => {
+    const [file, setFile] = useState(null);
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
+
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const handleUpload = async () => {
+        if (!file) {
+            alert("Please select a file first!");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    // No need to set 'Content-Type', browser sets it automatically for FormData
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error(`Error: ${res.status} ${res.statusText}`);
+            }
+
+            const data = await res.json();
+            setResponse(data);
+            setError(null);
+        } catch (err) {
+            setError(err.message);
+            setResponse(null);
+        }
+    };
+
+    return (
+        <div>
+            <h2>Upload a File</h2>
+            <input type="file" onChange={handleFileChange} />
+            <button onClick={handleUpload}>Upload</button>
+
+            {response && (
+                <div>
+                    <h3>Response:</h3>
+                    <pre>{JSON.stringify(response, null, 2)}</pre>
+                </div>
+            )}
+
+            {error && (
+                <div style={{ color: "red" }}>
+                    <h3>Error:</h3>
+                    <p>{error}</p>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
-}
+    );
+};
 
 export default Upload;
-
 
 // import React, { useState } from 'react';
 // import './Upload.css'; // Custom CSS for styling
