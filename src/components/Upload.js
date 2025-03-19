@@ -233,6 +233,7 @@
 
 // export default Upload;
 import React, { useState } from "react";
+import React, { useState } from "react";
 import "./Upload.css"; // Ensure you have the corresponding CSS file
 
 const Upload = () => {
@@ -305,7 +306,7 @@ const Upload = () => {
 
             {file && (
                 <div className="image-preview" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", textAlign: "center", marginTop: "10px" }}>
-                    <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" style={{ maxWidth: "100%", height: "auto", display: "block", margin: "0 auto" }} />
+                    <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" style={{ maxWidth: "100%", height: "450px", display: "block", margin: "0 auto", animation: "pulse 1.5s infinite alternate" }} />
                     <button className="upload-btn" onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
                 </div>
             )}
@@ -318,9 +319,9 @@ const Upload = () => {
             )}
 
             {response && (
-                <div className="result-container" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "10px" }}>
+                <div className="result-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", marginTop: "10px" }}>
                     <strong>Result of Brain Stroke Prediction:</strong>
-                    <span style={{ marginLeft: "10px" }}>{getPredictionLabel(response.predicted_class)}</span>
+                    <span style={{ marginTop: "10px", fontSize: "1.2rem", fontWeight: "bold" }}>{getPredictionLabel(response.predicted_class)}</span>
                 </div>
             )}
         </div>
