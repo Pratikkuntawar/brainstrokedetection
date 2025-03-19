@@ -1,4 +1,4 @@
-/* Original CSS*/
+/* /* Original CSS*/
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -290,4 +290,319 @@
   border: 1px solid #ddd; /* Optional: Adds a border for visibility */
   line-height: 1.6; /* Optional: Increases line height for better readability */
 border-radius: 10px;
+}
+ */
+/* Original CSS*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .text-container {
+    padding: 20px;
+  }
+  
+  .heading{
+    margin-bottom: 40px;
+    font-size: 2em;
+    color: #2c3e50;
+  }
+  
+  .definition {
+    line-height: 1.6;
+    color: #34495e;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: justify; /* Added justified text alignment */
+}
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .img-fluid {
+    width: 400px;  /* Set the width */
+    height: 400px; /* Set the height */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 10px; /* Add rounded corners */
+  }
+  
+  #h2{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+  
+
+  /* styles to represent types of strokes*/
+  .card-body{ 
+    border: 1px solid black; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+  }
+ 
+  .card:hover {
+    transform: scale(1.05); /* Scale the card up on hover */
+  }
+  .card-title {
+    font-size: 1.5em; /* Card title font size */
+    /*color: #2c3e50; /* Color for title */
+    color:#34495e;
+  }
+  
+  .card-text {
+    line-height: 2; /* Improve readability */
+    color: grey; /* Text color */
+  }
+  
+
+  /*symptoms card*/
+  .d{
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+  }
+  
+  .d:hover {
+    transform: scale(1.05); /* Scale the card up on hover */
+  }
+  
+  .t1{
+    font-size: 1.2em; /* Card title font size */
+    color: #2c3e50; /* Color for title */
+  }
+  
+  .t2 {
+    line-height: 1.6; /* Improve readability */
+    color: #34495e; /* Text color */
+  }
+  
+  /*new css*/
+  
+  /* Container styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff; /* White background for a clean look */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Slightly larger shadow */
+}
+
+/* Flexbox for responsive layout */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+/* Styling for text content */
+.text-container {
+  padding: 20px;
+}
+
+.heading {
+  font-size: 2.5em;
+  color: #1A535C; /* Dark teal for a calm effect */
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase; /* Uppercase for emphasis */
+}
+
+.definition {
+  line-height: 1.8;
+  color: black; /* Soft teal for readability */
+  color: #1A535C;
+  font-size: 1.1em;
+  font-weight: 500;
+  text-align: justify;
+}
+
+/* Image styling */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-fluid {
+  width: 450px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Deep shadow for focus */
+}
+
+/* Section title styling */
+#h2 {
+  margin-top: 50px;
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 2.2em;
+  color: #FF6B6B; /* Soft red to draw attention */
+  font-weight: bold;
+  letter-spacing: 1px; /* Spacing to enhance look */
+  text-transform: uppercase;
+}
+.symptoms{
+  color:#FF6B6B;
+}
+/* Stroke type cards */
+.card-body {
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  padding: 20px;
+  /* Light green for background  // card vr cha color */ 
+  transition: all 0.3s ease;
+}
+
+.card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Slight lift effect */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Slight hover shadow */
+}
+.symptoms{
+  color: #1A535C;
+}
+.card-title {
+  font-size: 1.8em;
+  color: #1A535C; /* Dark teal for titles */
+  font-weight: 600;
+}
+
+.card-text {
+  line-height: 1.8;
+  color: #333333; /* Dark gray for text readability */
+  font-size: 1.05em;
+}
+
+/* Symptoms card styling */
+.d {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #F0F4F8; /* Light blue-gray background for a soft tone */
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.d:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Card titles */
+.t1 {
+  font-size: 1.4em;
+  color: #FF6B6B; /* Soft red to highlight symptom titles */
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.t2 {
+  margin-top: 30px;
+  line-height: 1.8;
+  color: #34495e;
+  font-size: 1.05em;
+}
+
+/* General utility classes */
+.mb-4 {
+  margin-bottom: 40px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.card-title{
+  text-align: center;
+}  
+  
+@media (max-width: 768px) {
+  /* Stack the navbar items vertically */
+  .d{
+    border: 1px black;
+  }
+  .card-text{
+    text-align: center;
+  }
+  .heading{
+    font-size: 2rem;
+    color: #1A535C; /* Dark teal for a calm effect */
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+}  
+@media (max-width: 486px) {
+  /* Stack the navbar items vertically */
+  .d{
+    border: 1px black;
+  }
+  .heading{
+    font-size: 2rem;
+    color: #1A535C; /* Dark teal for a calm effect */
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+} 
+
+/* Optimize Card Styles */
+.card {
+  border: 1px solid #ddd; /* Lighter border */
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhance Symptom Cards */
+.d {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.d:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Improve Readability */
+.card-text {
+  font-size: 1rem;
+  color: #2c3e50;
+  line-height: 1.8;
+}
+
+/* Align Title */
+.heading, #h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #34495e;
+  margin-bottom: 30px;
 }
