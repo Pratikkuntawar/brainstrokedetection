@@ -570,8 +570,148 @@
 // export default Upload;
 
 //this is latest with summary table
+// import React, { useState } from "react";
+// import "./Upload.css"; // Ensure you have the corresponding CSS file
+
+// const Upload = () => {
+//     const [file, setFile] = useState(null);
+//     const [response, setResponse] = useState(null);
+//     const [error, setError] = useState(null);
+//     const [showSummary, setShowSummary] = useState(false);
+
+//     const handleFileChange = (e) => {
+//         const selectedFile = e.target.files[0];
+
+//         if (selectedFile) {
+//             setFile(selectedFile);
+//         }
+//     };
+
+//     const handleUpload = async () => {
+//         if (!file) {
+//             alert("Please select a file first!");
+//             return;
+//         }
+
+//         const formData = new FormData();
+//         formData.append("file", file);
+
+//         try {
+//             const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
+//                 method: "POST",
+//                 body: formData,
+//             });
+
+//             if (!res.ok) {
+//                 throw new Error(`Error: ${res.status} ${res.statusText}`);
+//             }
+
+//             const data = await res.json();
+//             setResponse(data);
+//             setError(null);
+//             setShowSummary(false);
+//         } catch (err) {
+//             setError(err.message);
+//             setResponse(null);
+//         }
+//     };
+
+//     const getPredictionLabel = (predictedClass) => {
+//         switch (predictedClass) {
+//             case 0:
+//                 return "Hemorrhagic Stroke";
+//             case 1:
+//                 return "Ischemic Stroke";
+//             case 2:
+//                 return "Normal Brain";
+//             default:
+//                 return "Unknown";
+//         }
+//     };
+
+//     return (
+//         <div className="upload-container">
+//             <h2 className="upload-title">Upload MRI Image for Analysis</h2>
+
+//             <div className="instructions">
+//                 <h3>Instructions:</h3>
+//                 <ul>
+//                     <li><strong>Supported formats:</strong> JPEG, PNG</li>
+//                     <li><strong>Required image size:</strong> 512 x 512</li>
+//                     <li><strong>Maximum file size:</strong> 10 MB</li>
+//                 </ul>
+//             </div>
+
+//             <div className="upload-input">
+//                 <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
+//                 <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
+//             </div>
+
+//             {file && (
+//                 <div className="image-preview">
+//                     <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
+//                 </div>
+//             )}
+
+//             {file && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+
+//             {error && (
+//                 <div className="error-message">
+//                     <h3>Error:</h3>
+//                     <p>{error}</p>
+//                 </div>
+//             )}
+
+//             {response && (
+//                 <div className="result-container">
+//                     <strong>Result of Brain Stroke Prediction:</strong>
+//                     <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
+//                     {(response.predicted_class === 0 || response.predicted_class === 1) && (
+//                         <button className="summary-btn" onClick={() => setShowSummary(!showSummary)}>
+//                             {showSummary ? "Hide Summary" : "Show Summary"}
+//                         </button>
+//                     )}
+//                 </div>
+//             )}
+
+//             {showSummary && (
+//                 <div className="summary-table">
+//                     <h3>📝 Stroke Prediction Summary Table</h3>
+//                     <table>
+//                         <thead>
+//                             <tr>
+//                                 <th>Feature</th>
+//                                 <th>Result / Value</th>
+//                             </tr>
+//                         </thead>
+//                         <tbody>
+//                             <tr>
+//                                 <td>Prediction</td>
+//                                 <td>🧠 {getPredictionLabel(response.predicted_class)}</td>
+//                             </tr>
+//                             <tr>
+//                                 <td>Confidence Level</td>
+//                                 <td>📊 92% (Model Accuracy)</td>
+//                             </tr>
+//                             <tr>
+//                                 <td>Possible Symptoms</td>
+//                                 <td>Weakness, Speech Difficulty (if applicable)</td>
+//                             </tr>
+//                             <tr>
+//                                 <td>Suggested Next Step</td>
+//                                 <td>🩺 Consult Neurologist / Further MRI Scan</td>
+//                             </tr>
+//                         </tbody>
+//                     </table>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
+
+// export default Upload;
 import React, { useState } from "react";
-import "./Upload.css"; // Ensure you have the corresponding CSS file
+import "./Upload.css";
 
 const Upload = () => {
     const [file, setFile] = useState(null);
@@ -581,10 +721,7 @@ const Upload = () => {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-
-        if (selectedFile) {
-            setFile(selectedFile);
-        }
+        if (selectedFile) setFile(selectedFile);
     };
 
     const handleUpload = async () => {
@@ -602,9 +739,7 @@ const Upload = () => {
                 body: formData,
             });
 
-            if (!res.ok) {
-                throw new Error(`Error: ${res.status} ${res.statusText}`);
-            }
+            if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
 
             const data = await res.json();
             setResponse(data);
@@ -666,17 +801,22 @@ const Upload = () => {
                 <div className="result-container">
                     <strong>Result of Brain Stroke Prediction:</strong>
                     <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
+
                     {(response.predicted_class === 0 || response.predicted_class === 1) && (
-                        <button className="summary-btn" onClick={() => setShowSummary(!showSummary)}>
+                        <button
+                            className="summary-btn"
+                            onClick={() => setShowSummary(!showSummary)}
+                        >
                             {showSummary ? "Hide Summary" : "Show Summary"}
                         </button>
                     )}
                 </div>
             )}
 
-            {showSummary && (
+            {/* Summary table - only shows when showSummary is true */}
+            {showSummary && response && (
                 <div className="summary-table">
-                    <h3>📝 Stroke Prediction Summary Table</h3>
+                    <h3>📝 Stroke Prediction Summary</h3>
                     <table>
                         <thead>
                             <tr>
