@@ -163,54 +163,49 @@
   text-align: center;
 }
 
-/* View Summary Button Styling */
-.view-summary-btn {
-  display: block; /* Ensures the button is on a new line */
-  margin: 20px auto; /* Centers the button horizontally */
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background-color: #007bff; /* Blue background */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.view-summary-btn:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  transform: scale(1.05); /* Slight scale effect */
-}
-
-/* Summary Table Styling */
 .summary-table {
-  width: 80%;
-  margin: 20px auto; /* Centers the table */
-  border-collapse: collapse;
-  display: none; /* Initially hidden */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none; /* Default: hidden */
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 5px;
 }
 
-.summary-table th,
-.summary-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
+.summary-table h3 {
+    margin-bottom: 10px;
+}
+
+.summary-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table th, .summary-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 }
 
 .summary-table th {
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
+    background-color: #f2f2f2;
 }
 
-.summary-table td {
-  background-color: #f9f9f9;
+.summary-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-/* Show Summary when Button Clicked */
-.show-summary {
-  display: table; /* Makes the table visible */
+.summary-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Ensure table is visible when toggled */
+.summary-table {
+    display: block;
 }
