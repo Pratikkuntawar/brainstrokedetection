@@ -165,20 +165,52 @@
 
 /* View Summary Button Styling */
 .view-summary-btn {
-  display: block; /* Ensures it's on a new line */
-  margin: 15px auto; /* Centers it below the result */
-  padding: 10px 20px;
-  font-size: 1rem;
+  display: block; /* Ensures the button is on a new line */
+  margin: 20px auto; /* Centers the button horizontally */
+  padding: 12px 20px;
+  font-size: 16px;
   font-weight: bold;
-  color: #fff;
-  background-color: #28a745; /* Green color for contrast */
+  color: white;
+  background-color: #007bff; /* Blue background */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .view-summary-btn:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight scale effect */
+}
+
+/* Summary Table Styling */
+.summary-table {
+  width: 80%;
+  margin: 20px auto; /* Centers the table */
+  border-collapse: collapse;
+  display: none; /* Initially hidden */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.summary-table th,
+.summary-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.summary-table th {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+}
+
+.summary-table td {
+  background-color: #f9f9f9;
+}
+
+/* Show Summary when Button Clicked */
+.show-summary {
+  display: table; /* Makes the table visible */
 }
