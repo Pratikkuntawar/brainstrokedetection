@@ -163,3 +163,22 @@
   text-align: center;
 }
 
+/* View Summary Button Styling */
+.view-summary-btn {
+  display: block; /* Ensures it's on a new line */
+  margin: 15px auto; /* Centers it below the result */
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745; /* Green color for contrast */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.view-summary-btn:hover {
+  background-color: #218838; /* Darker green on hover */
+}
