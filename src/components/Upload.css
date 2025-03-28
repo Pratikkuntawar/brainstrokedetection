@@ -155,12 +155,19 @@
 }
 
 /* Prediction Result Styling */
-.prediction-result {
+/* .prediction-result {
 /*   margin-top: 10px;
   font-size: 1.3rem; */
   font-weight: bold;
   color: #28a745;
   text-align: center;
+} */
+.prediction-result {
+  font-weight: bold;
+  color: #28a745;
+  text-align: center;
+  display: block;  /* Ensures it takes full width */
+  margin-top: 10px;
 }
 
 .summary-table {
@@ -192,13 +199,17 @@
 }
 
 .summary-btn {
-    margin-top: 10px;
-    padding: 8px 12px;
+    display: block;         /* Ensures it appears on a new row */
+    margin: 15px auto;      /* Centers horizontally */
+    padding: 10px 15px;
     background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 4px;
+    font-size: 1rem;
+    text-align: center;
+    width: fit-content;     /* Keeps button compact */
 }
 
 .summary-btn:hover {
