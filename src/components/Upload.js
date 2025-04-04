@@ -710,146 +710,146 @@
 // };
 
 // export default Upload;
-// import React, { useState } from "react";
-// import "./Upload.css";
+import React, { useState } from "react";
+import "./Upload.css";
 
-// const Upload = () => {
-//     const [file, setFile] = useState(null);
-//     const [response, setResponse] = useState(null);
-//     const [error, setError] = useState(null);
-//     const [showSummary, setShowSummary] = useState(false);
+const Upload = () => {
+    const [file, setFile] = useState(null);
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
+    const [showSummary, setShowSummary] = useState(false);
 
-//     const handleFileChange = (e) => {
-//         const selectedFile = e.target.files[0];
-//         if (selectedFile) setFile(selectedFile);
-//     };
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) setFile(selectedFile);
+    };
 
-//     const handleUpload = async () => {
-//         if (!file) {
-//             alert("Please select a file first!");
-//             return;
-//         }
+    const handleUpload = async () => {
+        if (!file) {
+            alert("Please select a file first!");
+            return;
+        }
 
-//         const formData = new FormData();
-//         formData.append("file", file);
+        const formData = new FormData();
+        formData.append("file", file);
 
-//         try {
-//             const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
-//                 method: "POST",
-//                 body: formData,
-//             });
+        try {
+            const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
+                method: "POST",
+                body: formData,
+            });
 
-//             if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
+            if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
 
-//             const data = await res.json();
-//             setResponse(data);
-//             setError(null);
-//             setShowSummary(false);
-//         } catch (err) {
-//             setError(err.message);
-//             setResponse(null);
-//         }
-//     };
+            const data = await res.json();
+            setResponse(data);
+            setError(null);
+            setShowSummary(false);
+        } catch (err) {
+            setError(err.message);
+            setResponse(null);
+        }
+    };
 
-//     const getPredictionLabel = (predictedClass) => {
-//         switch (predictedClass) {
-//             case 0:
-//                 return "Hemorrhagic Stroke";
-//             case 1:
-//                 return "Ischemic Stroke";
-//             case 2:
-//                 return "Normal Brain";
-//             default:
-//                 return "Unknown";
-//         }
-//     };
+    const getPredictionLabel = (predictedClass) => {
+        switch (predictedClass) {
+            case 0:
+                return "Hemorrhagic Stroke";
+            case 1:
+                return "Ischemic Stroke";
+            case 2:
+                return "Normal Brain";
+            default:
+                return "Unknown";
+        }
+    };
 
-//     return (
-//         <div className="upload-container">
-//             <h2 className="upload-title">Upload MRI Image for Analysis</h2>
+    return (
+        <div className="upload-container">
+            <h2 className="upload-title">Upload MRI Image for Analysis</h2>
 
-//             <div className="instructions">
-//                 <h3>Instructions:</h3>
-//                 <ul>
-//                     <li><strong>Supported formats:</strong> JPEG, PNG</li>
-//                     <li><strong>Required image size:</strong> 512 x 512</li>
-//                     <li><strong>Maximum file size:</strong> 10 MB</li>
-//                 </ul>
-//             </div>
+            <div className="instructions">
+                <h3>Instructions:</h3>
+                <ul>
+                    <li><strong>Supported formats:</strong> JPEG, PNG</li>
+                    <li><strong>Required image size:</strong> 512 x 512</li>
+                    <li><strong>Maximum file size:</strong> 10 MB</li>
+                </ul>
+            </div>
 
-//             <div className="upload-input">
-//                 <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
-//                 <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
-//             </div>
+            <div className="upload-input">
+                <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
+                <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
+            </div>
 
-//             {file && (
-//                 <div className="image-preview">
-//                     <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
-//                 </div>
-//             )}
+            {file && (
+                <div className="image-preview">
+                    <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
+                </div>
+            )}
 
-//             {file && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+            {file && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
 
-//             {error && (
-//                 <div className="error-message">
-//                     <h3>Error:</h3>
-//                     <p>{error}</p>
-//                 </div>
-//             )}
+            {error && (
+                <div className="error-message">
+                    <h3>Error:</h3>
+                    <p>{error}</p>
+                </div>
+            )}
 
-//             {response && (
-//                 <div className="result-container">
-//                     <strong>Result of Brain Stroke Prediction:</strong>
-//                     <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
+            {response && (
+                <div className="result-container">
+                    <strong>Result of Brain Stroke Prediction:</strong>
+                    <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
 
-//                     {(response.predicted_class === 0 || response.predicted_class === 1) && (
-//                         <button
-//                             className="summary-btn"
-//                             onClick={() => setShowSummary(!showSummary)}
-//                         >
-//                             {showSummary ? "Hide Summary" : "Show Summary"}
-//                         </button>
-//                     )}
-//                 </div>
-//             )}
+                    {(response.predicted_class === 0 || response.predicted_class === 1) && (
+                        <button
+                            className="summary-btn"
+                            onClick={() => setShowSummary(!showSummary)}
+                        >
+                            {showSummary ? "Hide Summary" : "Show Summary"}
+                        </button>
+                    )}
+                </div>
+            )}
 
-//             {/* Summary table - only shows when showSummary is true */}
-//             {showSummary && response && (
-//                 <div className="summary-table">
-//                     <h3>📝 Stroke Prediction Summary</h3>
-//                     <table>
-//                         <thead>
-//                             <tr>
-//                                 <th>Feature</th>
-//                                 <th>Result / Value</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             <tr>
-//                                 <td>Prediction</td>
-//                                 <td>🧠 {getPredictionLabel(response.predicted_class)}</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Confidence Level</td>
-//                                 <td>📊 92% (Model Accuracy)</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Possible Symptoms</td>
-//                                 <td>Weakness, Speech Difficulty (if applicable)</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Suggested Next Step</td>
-//                                 <td>🩺 Consult Neurologist / Further MRI Scan</td>
-//                             </tr>
-//                         </tbody>
-//                     </table>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
+            {/* Summary table - only shows when showSummary is true */}
+            {showSummary && response && (
+                <div className="summary-table">
+                    <h3>📝 Stroke Prediction Summary</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Result / Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Prediction</td>
+                                <td>🧠 {getPredictionLabel(response.predicted_class)}</td>
+                            </tr>
+                            <tr>
+                                <td>Confidence Level</td>
+                                <td>📊 92% (Model Accuracy)</td>
+                            </tr>
+                            <tr>
+                                <td>Possible Symptoms</td>
+                                <td>Weakness, Speech Difficulty (if applicable)</td>
+                            </tr>
+                            <tr>
+                                <td>Suggested Next Step</td>
+                                <td>🩺 Consult Neurologist / Further MRI Scan</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </div>
+    );
+};
 
-// export default Upload;
+export default Upload;
 
 
 
@@ -997,136 +997,136 @@
 
 
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-const Upload = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [inputImage, setInputImage] = useState(null);
-  const [processedImage, setProcessedImage] = useState(null);
-  const [predictedClass, setPredictedClass] = useState(null);
-  const [confidenceScore, setConfidenceScore] = useState(null);
-  const [showSummary, setShowSummary] = useState(false);
-  const [uploaded, setUploaded] = useState(false);
+// const Upload = () => {
+//   const [selectedFile, setSelectedFile] = useState(null);
+//   const [inputImage, setInputImage] = useState(null);
+//   const [processedImage, setProcessedImage] = useState(null);
+//   const [predictedClass, setPredictedClass] = useState(null);
+//   const [confidenceScore, setConfidenceScore] = useState(null);
+//   const [showSummary, setShowSummary] = useState(false);
+//   const [uploaded, setUploaded] = useState(false);
 
-  // Handle file selection
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setInputImage(URL.createObjectURL(file));
-      setProcessedImage(null);
-      setPredictedClass(null);
-      setShowSummary(false);
-      setUploaded(false);
-    }
-  };
+//   // Handle file selection
+//   const handleFileChange = (event) => {
+//     const file = event.target.files[0];
+//     if (file) {
+//       setSelectedFile(file);
+//       setInputImage(URL.createObjectURL(file));
+//       setProcessedImage(null);
+//       setPredictedClass(null);
+//       setShowSummary(false);
+//       setUploaded(false);
+//     }
+//   };
 
-  // Handle file upload
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      alert("Please select an image first.");
-      return;
-    }
+//   // Handle file upload
+//   const handleUpload = async () => {
+//     if (!selectedFile) {
+//       alert("Please select an image first.");
+//       return;
+//     }
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+//     const formData = new FormData();
+//     formData.append("file", selectedFile);
 
-    try {
-      const response = await fetch("https://final-year-pro-ut4k.onrender.com/predict/", {
-        method: "POST",
-        body: formData,
-      });
+//     try {
+//       const response = await fetch("https://final-year-pro-ut4k.onrender.com/predict/", {
+//         method: "POST",
+//         body: formData,
+//       });
 
-      if (!response.ok) {
-        throw new Error(API error: ${response.status});
-      }
+//       if (!response.ok) {
+//         throw new Error(API error: ${response.status});
+//       }
 
-      const blob = await response.blob();
-      const headers = response.headers;
+//       const blob = await response.blob();
+//       const headers = response.headers;
 
-      const predictedClass = headers.get("x-predicted-class");
-      const confidenceScore = headers.get("x-confidence-score");
+//       const predictedClass = headers.get("x-predicted-class");
+//       const confidenceScore = headers.get("x-confidence-score");
 
-      setProcessedImage(URL.createObjectURL(blob));
-      setPredictedClass(predictedClass);
-      setConfidenceScore(confidenceScore);
-      setUploaded(true);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      alert("Error processing the image. Please try again.");
-    }
-  };
+//       setProcessedImage(URL.createObjectURL(blob));
+//       setPredictedClass(predictedClass);
+//       setConfidenceScore(confidenceScore);
+//       setUploaded(true);
+//     } catch (error) {
+//       console.error("Error uploading file:", error);
+//       alert("Error processing the image. Please try again.");
+//     }
+//   };
 
-  // Map predicted class to readable labels
-  const getClassLabel = (predictedClass) => {
-    if (predictedClass === "0") return "Hemorrhagic Stroke";
-    if (predictedClass === "1") return "Ischemic Stroke";
-    if (predictedClass === "2") return "Normal Brain";
-    return "Unknown";
-  };
+//   // Map predicted class to readable labels
+//   const getClassLabel = (predictedClass) => {
+//     if (predictedClass === "0") return "Hemorrhagic Stroke";
+//     if (predictedClass === "1") return "Ischemic Stroke";
+//     if (predictedClass === "2") return "Normal Brain";
+//     return "Unknown";
+//   };
 
-  return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      {/* Select Image Button */}
-      <input type="file" accept="image/*" onChange={handleFileChange} />
+//   return (
+//     <div style={{ textAlign: "center", padding: "20px" }}>
+//       {/* Select Image Button */}
+//       <input type="file" accept="image/*" onChange={handleFileChange} />
       
-      {/* Show Selected Image Before Upload */}
-      {inputImage && !uploaded && (
-        <div style={{ marginTop: "20px" }}>
-          <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
-        </div>
-      )}
+//       {/* Show Selected Image Before Upload */}
+//       {inputImage && !uploaded && (
+//         <div style={{ marginTop: "20px" }}>
+//           <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
+//         </div>
+//       )}
 
-      {/* Upload Button */}
-      {inputImage && (
-        <div style={{ marginTop: "20px" }}>
-          <button onClick={handleUpload}>Upload</button>
-        </div>
-      )}
+//       {/* Upload Button */}
+//       {inputImage && (
+//         <div style={{ marginTop: "20px" }}>
+//           <button onClick={handleUpload}>Upload</button>
+//         </div>
+//       )}
 
-      {/* Show Images Side by Side After Upload */}
-      {inputImage && processedImage && uploaded && (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0" }}>
-          <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
-          <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
-        </div>
-      )}
+//       {/* Show Images Side by Side After Upload */}
+//       {inputImage && processedImage && uploaded && (
+//         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0" }}>
+//           <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
+//           <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
+//         </div>
+//       )}
 
-      {/* Predicted Class and View Summary Button */}
-      {predictedClass && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Brain Stroke Prediction: {getClassLabel(predictedClass)}</h3>
-          <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
-        </div>
-      )}
+//       {/* Predicted Class and View Summary Button */}
+//       {predictedClass && (
+//         <div style={{ marginTop: "20px" }}>
+//           <h3>Brain Stroke Prediction: {getClassLabel(predictedClass)}</h3>
+//           <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
+//         </div>
+//       )}
 
-      {/* Summary Table */}
-      {showSummary && (
-        <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px", display: "inline-block" }}>
-          <h4>Summary</h4>
-          <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th>Parameter</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Predicted Class</td>
-                <td>{getClassLabel(predictedClass)}</td>
-              </tr>
-              <tr>
-                <td>Confidence Score</td>
-                <td>{confidenceScore ? confidenceScore : "N/A"}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
-};
+//       {/* Summary Table */}
+//       {showSummary && (
+//         <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px", display: "inline-block" }}>
+//           <h4>Summary</h4>
+//           <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
+//             <thead>
+//               <tr>
+//                 <th>Parameter</th>
+//                 <th>Value</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               <tr>
+//                 <td>Predicted Class</td>
+//                 <td>{getClassLabel(predictedClass)}</td>
+//               </tr>
+//               <tr>
+//                 <td>Confidence Score</td>
+//                 <td>{confidenceScore ? confidenceScore : "N/A"}</td>
+//               </tr>
+//             </tbody>
+//           </table>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
-export default Upload;
+// export default Upload;
 
