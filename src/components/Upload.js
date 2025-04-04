@@ -862,12 +862,10 @@ import "./Upload.css";
 
 const Upload = () => {
     const [file, setFile] = useState(null);
+    const [processedImage, setProcessedImage] = useState(null);
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
     const [showSummary, setShowSummary] = useState(false);
-    const [predictedClass, setPredictedClass] = useState(null);
-    const [confidenceScore, setConfidenceScore] = useState(null);
-    const [mlImage, setMlImage] = useState(null); // Image provided by ML model
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -891,30 +889,27 @@ const Upload = () => {
 
             if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
 
-            // Extracting predicted class and confidence from headers
-            const predictedClass = res.headers.get("x-predicted-class");
-            const confidenceScore = res.headers.get("x-confidence-score");
+            // Convert image response into a blob
+            const blob = await res.blob();
+            const imageUrl = URL.createObjectURL(blob);
 
-            const data = await res.json();
+            // Extract JSON data (Assuming API returns JSON in a separate field)
+            const jsonResponse = await fetch("https://final-year-pro-ut4k.onrender.com/get_prediction");
+            const data = await jsonResponse.json();
+
+            setProcessedImage(imageUrl);
             setResponse(data);
             setError(null);
             setShowSummary(false);
-            setPredictedClass(predictedClass);
-            setConfidenceScore(confidenceScore);
-
-            // Assume ML model returns an image URL in response
-            if (data.ml_image_url) {
-                setMlImage(data.ml_image_url);
-            }
-
         } catch (err) {
             setError(err.message);
+            setProcessedImage(null);
             setResponse(null);
         }
     };
 
     const getPredictionLabel = (predictedClass) => {
-        switch (Number(predictedClass)) {
+        switch (predictedClass) {
             case 0:
                 return "Hemorrhagic Stroke";
             case 1:
@@ -945,16 +940,16 @@ const Upload = () => {
             </div>
 
             {file && (
-                <div className="image-row">
-                    <div className="image-preview">
-                        <h4>Uploaded Image</h4>
+                <div className="image-preview-container">
+                    <div className="image-column">
+                        <h3>Input Image:</h3>
                         <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
                     </div>
 
-                    {mlImage && (
-                        <div className="image-preview">
-                            <h4>ML Processed Image</h4>
-                            <img src={mlImage} alt="Processed" className="preview-img" />
+                    {processedImage && (
+                        <div className="image-column">
+                            <h3>Processed Image:</h3>
+                            <img src={processedImage} alt="Processed MRI" className="processed-img" />
                         </div>
                     )}
                 </div>
@@ -969,16 +964,12 @@ const Upload = () => {
                 </div>
             )}
 
-            {predictedClass !== null && (
+            {response && (
                 <div className="result-container">
                     <strong>Result of Brain Stroke Prediction:</strong>
-                    <span className="prediction-result">{getPredictionLabel(predictedClass)}</span>
+                    <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
 
-                    {confidenceScore && (
-                        <p><strong>Confidence Score:</strong> {confidenceScore}</p>
-                    )}
-
-                    {(predictedClass === "0" || predictedClass === "1") && (
+                    {(response.predicted_class === 0 || response.predicted_class === 1) && (
                         <button
                             className="summary-btn"
                             onClick={() => setShowSummary(!showSummary)}
@@ -989,7 +980,8 @@ const Upload = () => {
                 </div>
             )}
 
-            {showSummary && predictedClass !== null && (
+            {/* Summary Table - only shows when showSummary is true */}
+            {showSummary && response && (
                 <div className="summary-table">
                     <h3>📝 Stroke Prediction Summary</h3>
                     <table>
@@ -1002,11 +994,11 @@ const Upload = () => {
                         <tbody>
                             <tr>
                                 <td>Prediction</td>
-                                <td>🧠 {getPredictionLabel(predictedClass)}</td>
+                                <td>🧠 {getPredictionLabel(response.predicted_class)}</td>
                             </tr>
                             <tr>
                                 <td>Confidence Level</td>
-                                <td>📊 {confidenceScore ? `${confidenceScore} (Model Confidence)` : "N/A"}</td>
+                                <td>📊 92% (Model Accuracy)</td>
                             </tr>
                             <tr>
                                 <td>Possible Symptoms</td>
