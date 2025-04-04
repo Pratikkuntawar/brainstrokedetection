@@ -873,11 +873,11 @@ const StrokeDetection = () => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setInputImage(URL.createObjectURL(file)); // Show selected image
-      setProcessedImage(null); // Clear previous processed image
-      setPredictedClass(null); // Clear previous prediction
-      setShowSummary(false); // Hide summary initially
-      setUploaded(false); // Reset uploaded state
+      setInputImage(URL.createObjectURL(file));
+      setProcessedImage(null);
+      setPredictedClass(null);
+      setShowSummary(false);
+      setUploaded(false);
     }
   };
 
@@ -929,66 +929,67 @@ const StrokeDetection = () => {
     <div style={{ textAlign: "center", padding: "20px" }}>
       {/* Select Image Button */}
       <input type="file" accept="image/*" onChange={handleFileChange} />
+      
+      {/* Show Selected Image Before Upload */}
+      {inputImage && !uploaded && (
+        <div style={{ marginTop: "20px" }}>
+          <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
+        </div>
+      )}
 
-      {/* Image and Upload Button */}
+      {/* Upload Button */}
       {inputImage && (
-        <div style={{ marginTop: "10px" }}>
-          {!uploaded ? (
-            <>
-              <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
-              <div>
-                <button onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
-              </div>
-            </>
-          ) : (
-            <>
-              {/* Show both images horizontally between Select Image & Upload Button */}
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0" }}>
-                <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
-                <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
-              </div>
-              <button onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
-            </>
-          )}
+        <div style={{ marginTop: "20px" }}>
+          <button onClick={handleUpload}>Upload</button>
         </div>
       )}
 
-      {/* Show prediction result & "View Summary" button after processing */}
-      {predictedClass !== null && (
-        <div style={{ marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <h3>Result of Brain Stroke Detection: {getClassLabel(predictedClass)}</h3>
-          <button onClick={() => setShowSummary(!showSummary)} style={{ marginLeft: "10px" }}>
-            View Summary
-          </button>
+      {/* Show Images Side by Side After Upload */}
+      {inputImage && processedImage && uploaded && (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0" }}>
+          <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
+          <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
         </div>
       )}
 
-      {/* Show summary table when "View Summary" is clicked */}
+      {/* Predicted Class and View Summary Button */}
+      {predictedClass && (
+        <div style={{ marginTop: "20px" }}>
+          <h3>Brain Stroke Prediction: {getClassLabel(predictedClass)}</h3>
+          <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
+        </div>
+      )}
+
+      {/* Summary Table */}
       {showSummary && (
-        <table border="1" style={{ margin: "20px auto", width: "50%" }}>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Predicted Class</td>
-              <td>{getClassLabel(predictedClass)}</td>
-            </tr>
-            <tr>
-              <td>Confidence Score</td>
-              <td>{confidenceScore}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px", display: "inline-block" }}>
+          <h4>Summary</h4>
+          <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Predicted Class</td>
+                <td>{getClassLabel(predictedClass)}</td>
+              </tr>
+              <tr>
+                <td>Confidence Score</td>
+                <td>{confidenceScore ? confidenceScore : "N/A"}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 };
 
 export default StrokeDetection;
+
 
 
 
