@@ -710,6 +710,153 @@
 // };
 
 // export default Upload;
+// import React, { useState } from "react";
+// import "./Upload.css";
+
+// const Upload = () => {
+//     const [file, setFile] = useState(null);
+//     const [response, setResponse] = useState(null);
+//     const [error, setError] = useState(null);
+//     const [showSummary, setShowSummary] = useState(false);
+
+//     const handleFileChange = (e) => {
+//         const selectedFile = e.target.files[0];
+//         if (selectedFile) setFile(selectedFile);
+//     };
+
+//     const handleUpload = async () => {
+//         if (!file) {
+//             alert("Please select a file first!");
+//             return;
+//         }
+
+//         const formData = new FormData();
+//         formData.append("file", file);
+
+//         try {
+//             const res = await fetch("https://final-year-pro-ut4k.onrender.com/predict", {
+//                 method: "POST",
+//                 body: formData,
+//             });
+
+//             if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
+
+//             const data = await res.json();
+//             setResponse(data);
+//             setError(null);
+//             setShowSummary(false);
+//         } catch (err) {
+//             setError(err.message);
+//             setResponse(null);
+//         }
+//     };
+
+//     const getPredictionLabel = (predictedClass) => {
+//         switch (predictedClass) {
+//             case 0:
+//                 return "Hemorrhagic Stroke";
+//             case 1:
+//                 return "Ischemic Stroke";
+//             case 2:
+//                 return "Normal Brain";
+//             default:
+//                 return "Unknown";
+//         }
+//     };
+
+//     return (
+//         <div className="upload-container">
+//             <h2 className="upload-title">Upload MRI Image for Analysis</h2>
+
+//             <div className="instructions">
+//                 <h3>Instructions:</h3>
+//                 <ul>
+//                     <li><strong>Supported formats:</strong> JPEG, PNG</li>
+//                     <li><strong>Required image size:</strong> 512 x 512</li>
+//                     <li><strong>Maximum file size:</strong> 10 MB</li>
+//                 </ul>
+//             </div>
+
+//             <div className="upload-input">
+//                 <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
+//                 <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
+//             </div>
+
+//             {file && (
+//                 <div className="image-preview">
+//                     <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
+//                 </div>
+//             )}
+
+//             {file && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+
+//             {error && (
+//                 <div className="error-message">
+//                     <h3>Error:</h3>
+//                     <p>{error}</p>
+//                 </div>
+//             )}
+
+//             {response && (
+//                 <div className="result-container">
+//                     <strong>Result of Brain Stroke Prediction:</strong>
+//                     <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
+
+//                     {(response.predicted_class === 0 || response.predicted_class === 1) && (
+//                         <button
+//                             className="summary-btn"
+//                             onClick={() => setShowSummary(!showSummary)}
+//                         >
+//                             {showSummary ? "Hide Summary" : "Show Summary"}
+//                         </button>
+//                     )}
+//                 </div>
+//             )}
+
+//             {/* Summary table - only shows when showSummary is true */}
+//             {showSummary && response && (
+//                 <div className="summary-table">
+//                     <h3>📝 Stroke Prediction Summary</h3>
+//                     <table>
+//                         <thead>
+//                             <tr>
+//                                 <th>Feature</th>
+//                                 <th>Result / Value</th>
+//                             </tr>
+//                         </thead>
+//                         <tbody>
+//                             <tr>
+//                                 <td>Prediction</td>
+//                                 <td>🧠 {getPredictionLabel(response.predicted_class)}</td>
+//                             </tr>
+//                             <tr>
+//                                 <td>Confidence Level</td>
+//                                 <td>📊 92% (Model Accuracy)</td>
+//                             </tr>
+//                             <tr>
+//                                 <td>Possible Symptoms</td>
+//                                 <td>Weakness, Speech Difficulty (if applicable)</td>
+//                             </tr>
+//                             <tr>
+//                                 <td>Suggested Next Step</td>
+//                                 <td>🩺 Consult Neurologist / Further MRI Scan</td>
+//                             </tr>
+//                         </tbody>
+//                     </table>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
+
+// export default Upload;
+
+
+
+
+
+
+
 import React, { useState } from "react";
 import "./Upload.css";
 
@@ -718,6 +865,9 @@ const Upload = () => {
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
     const [showSummary, setShowSummary] = useState(false);
+    const [predictedClass, setPredictedClass] = useState(null);
+    const [confidenceScore, setConfidenceScore] = useState(null);
+    const [mlImage, setMlImage] = useState(null); // Image provided by ML model
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -741,10 +891,22 @@ const Upload = () => {
 
             if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
 
+            // Extracting predicted class and confidence from headers
+            const predictedClass = res.headers.get("x-predicted-class");
+            const confidenceScore = res.headers.get("x-confidence-score");
+
             const data = await res.json();
             setResponse(data);
             setError(null);
             setShowSummary(false);
+            setPredictedClass(predictedClass);
+            setConfidenceScore(confidenceScore);
+
+            // Assume ML model returns an image URL in response
+            if (data.ml_image_url) {
+                setMlImage(data.ml_image_url);
+            }
+
         } catch (err) {
             setError(err.message);
             setResponse(null);
@@ -752,7 +914,7 @@ const Upload = () => {
     };
 
     const getPredictionLabel = (predictedClass) => {
-        switch (predictedClass) {
+        switch (Number(predictedClass)) {
             case 0:
                 return "Hemorrhagic Stroke";
             case 1:
@@ -783,8 +945,18 @@ const Upload = () => {
             </div>
 
             {file && (
-                <div className="image-preview">
-                    <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
+                <div className="image-row">
+                    <div className="image-preview">
+                        <h4>Uploaded Image</h4>
+                        <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
+                    </div>
+
+                    {mlImage && (
+                        <div className="image-preview">
+                            <h4>ML Processed Image</h4>
+                            <img src={mlImage} alt="Processed" className="preview-img" />
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -797,12 +969,16 @@ const Upload = () => {
                 </div>
             )}
 
-            {response && (
+            {predictedClass !== null && (
                 <div className="result-container">
                     <strong>Result of Brain Stroke Prediction:</strong>
-                    <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
+                    <span className="prediction-result">{getPredictionLabel(predictedClass)}</span>
 
-                    {(response.predicted_class === 0 || response.predicted_class === 1) && (
+                    {confidenceScore && (
+                        <p><strong>Confidence Score:</strong> {confidenceScore}</p>
+                    )}
+
+                    {(predictedClass === "0" || predictedClass === "1") && (
                         <button
                             className="summary-btn"
                             onClick={() => setShowSummary(!showSummary)}
@@ -813,8 +989,7 @@ const Upload = () => {
                 </div>
             )}
 
-            {/* Summary table - only shows when showSummary is true */}
-            {showSummary && response && (
+            {showSummary && predictedClass !== null && (
                 <div className="summary-table">
                     <h3>📝 Stroke Prediction Summary</h3>
                     <table>
@@ -827,11 +1002,11 @@ const Upload = () => {
                         <tbody>
                             <tr>
                                 <td>Prediction</td>
-                                <td>🧠 {getPredictionLabel(response.predicted_class)}</td>
+                                <td>🧠 {getPredictionLabel(predictedClass)}</td>
                             </tr>
                             <tr>
                                 <td>Confidence Level</td>
-                                <td>📊 92% (Model Accuracy)</td>
+                                <td>📊 {confidenceScore ? `${confidenceScore} (Model Confidence)` : "N/A"}</td>
                             </tr>
                             <tr>
                                 <td>Possible Symptoms</td>
