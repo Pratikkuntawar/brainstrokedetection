@@ -857,9 +857,9 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const StrokeDetection = () => {
+const Upload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [inputImage, setInputImage] = useState(null);
   const [processedImage, setProcessedImage] = useState(null);
@@ -867,6 +867,11 @@ const StrokeDetection = () => {
   const [confidenceScore, setConfidenceScore] = useState(null);
   const [showSummary, setShowSummary] = useState(false);
   const [uploaded, setUploaded] = useState(false);
+
+  // Debugging logs
+  useEffect(() => {
+    console.log("Component re-rendered! Predicted Class:", predictedClass);
+  }, [predictedClass]);
 
   // Handle file selection
   const handleFileChange = (event) => {
@@ -906,6 +911,14 @@ const StrokeDetection = () => {
 
       const predictedClass = headers.get("x-predicted-class");
       const confidenceScore = headers.get("x-confidence-score");
+
+      console.log("Predicted Class:", predictedClass);
+      console.log("Confidence Score:", confidenceScore);
+
+      if (!predictedClass) {
+        alert("Prediction failed. No class received.");
+        return;
+      }
 
       setProcessedImage(URL.createObjectURL(blob));
       setPredictedClass(predictedClass);
@@ -962,7 +975,9 @@ const StrokeDetection = () => {
       {/* Show "View Summary" Button ONLY after Prediction is Available */}
       {predictedClass && (
         <div style={{ marginTop: "10px" }}>
-          <button onClick={() => setShowSummary(true)}>View Summary</button>
+          <button onClick={() => setShowSummary((prev) => !prev)}>
+            {showSummary ? "Hide Summary" : "View Summary"}
+          </button>
         </div>
       )}
 
@@ -994,7 +1009,8 @@ const StrokeDetection = () => {
   );
 };
 
-export default StrokeDetection;
+export default Upload;
+
 
 
 
