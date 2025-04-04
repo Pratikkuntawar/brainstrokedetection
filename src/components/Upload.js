@@ -863,9 +863,10 @@ import "./Upload.css";
 const Upload = () => {
     const [file, setFile] = useState(null);
     const [processedImage, setProcessedImage] = useState(null);
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
+    const [prediction, setPrediction] = useState(null);
+    const [confidence, setConfidence] = useState(null);
     const [showSummary, setShowSummary] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -888,33 +889,33 @@ const Upload = () => {
             });
 
             if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
-
-            // Convert image response into a blob
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            // Extract JSON data (Assuming API returns JSON in a separate field)
-            const jsonResponse = await fetch("https://final-year-pro-ut4k.onrender.com/get_prediction");
-            const data = await jsonResponse.json();
+            
+            // Extract headers
+            const predictedClass = res.headers.get("x-predicted-class");
+            const confidenceScore = res.headers.get("x-confidence-score");
+            const imageBlob = await res.blob();
+            const imageUrl = URL.createObjectURL(imageBlob);
 
             setProcessedImage(imageUrl);
-            setResponse(data);
+            setPrediction(predictedClass);
+            setConfidence(confidenceScore);
             setError(null);
             setShowSummary(false);
         } catch (err) {
             setError(err.message);
             setProcessedImage(null);
-            setResponse(null);
+            setPrediction(null);
+            setConfidence(null);
         }
     };
 
     const getPredictionLabel = (predictedClass) => {
         switch (predictedClass) {
-            case 0:
+            case "0":
                 return "Hemorrhagic Stroke";
-            case 1:
+            case "1":
                 return "Ischemic Stroke";
-            case 2:
+            case "2":
                 return "Normal Brain";
             default:
                 return "Unknown";
@@ -924,64 +925,41 @@ const Upload = () => {
     return (
         <div className="upload-container">
             <h2 className="upload-title">Upload MRI Image for Analysis</h2>
-
-            <div className="instructions">
-                <h3>Instructions:</h3>
-                <ul>
-                    <li><strong>Supported formats:</strong> JPEG, PNG</li>
-                    <li><strong>Required image size:</strong> 512 x 512</li>
-                    <li><strong>Maximum file size:</strong> 10 MB</li>
-                </ul>
-            </div>
-
             <div className="upload-input">
                 <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="file-upload" />
                 <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>Select Image</button>
             </div>
 
-            {file && (
-                <div className="image-preview-container">
-                    <div className="image-column">
-                        <h3>Input Image:</h3>
-                        <img src={URL.createObjectURL(file)} alt="Selected" className="preview-img" />
-                    </div>
-
-                    {processedImage && (
-                        <div className="image-column">
-                            <h3>Processed Image:</h3>
-                            <img src={processedImage} alt="Processed MRI" className="processed-img" />
-                        </div>
-                    )}
-                </div>
-            )}
-
             {file && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+            
+            {error && <div className="error-message">Error: {error}</div>}
 
-            {error && (
-                <div className="error-message">
-                    <h3>Error:</h3>
-                    <p>{error}</p>
+            {(file && processedImage) && (
+                <div className="image-row">
+                    <div className="image-container">
+                        <h3>Input Image</h3>
+                        <img src={URL.createObjectURL(file)} alt="Input" className="preview-img" />
+                    </div>
+                    <div className="image-container">
+                        <h3>Processed Image</h3>
+                        <img src={processedImage} alt="Processed" className="preview-img" />
+                    </div>
                 </div>
             )}
 
-            {response && (
+            {prediction !== null && (
                 <div className="result-container">
-                    <strong>Result of Brain Stroke Prediction:</strong>
-                    <span className="prediction-result">{getPredictionLabel(response.predicted_class)}</span>
-
-                    {(response.predicted_class === 0 || response.predicted_class === 1) && (
-                        <button
-                            className="summary-btn"
-                            onClick={() => setShowSummary(!showSummary)}
-                        >
-                            {showSummary ? "Hide Summary" : "Show Summary"}
-                        </button>
-                    )}
+                    <strong>Prediction:</strong> <span className="prediction-result">{getPredictionLabel(prediction)}</span>
+                    <br />
+                    <strong>Confidence Score:</strong> {confidence}
+                    <br />
+                    <button className="summary-btn" onClick={() => setShowSummary(!showSummary)}>
+                        {showSummary ? "Hide Summary" : "View Summary"}
+                    </button>
                 </div>
             )}
 
-            {/* Summary Table - only shows when showSummary is true */}
-            {showSummary && response && (
+            {showSummary && prediction !== null && (
                 <div className="summary-table">
                     <h3>📝 Stroke Prediction Summary</h3>
                     <table>
@@ -994,11 +972,11 @@ const Upload = () => {
                         <tbody>
                             <tr>
                                 <td>Prediction</td>
-                                <td>🧠 {getPredictionLabel(response.predicted_class)}</td>
+                                <td>🧠 {getPredictionLabel(prediction)}</td>
                             </tr>
                             <tr>
                                 <td>Confidence Level</td>
-                                <td>📊 92% (Model Accuracy)</td>
+                                <td>📊 {confidence * 100}%</td>
                             </tr>
                             <tr>
                                 <td>Possible Symptoms</td>
