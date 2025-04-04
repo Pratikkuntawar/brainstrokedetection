@@ -952,16 +952,22 @@ const StrokeDetection = () => {
         </div>
       )}
 
-      {/* Predicted Class and View Summary Button */}
+      {/* Show Predicted Class (Only after upload & classification) */}
       {predictedClass && (
         <div style={{ marginTop: "20px" }}>
           <h3>Brain Stroke Prediction: {getClassLabel(predictedClass)}</h3>
-          <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
         </div>
       )}
 
-      {/* Summary Table */}
-      {showSummary && (
+      {/* Show "View Summary" Button ONLY after Prediction is Available */}
+      {predictedClass && (
+        <div style={{ marginTop: "10px" }}>
+          <button onClick={() => setShowSummary(true)}>View Summary</button>
+        </div>
+      )}
+
+      {/* Summary Table (Only after clicking "View Summary") */}
+      {showSummary && predictedClass && (
         <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px", display: "inline-block" }}>
           <h4>Summary</h4>
           <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -989,6 +995,7 @@ const StrokeDetection = () => {
 };
 
 export default StrokeDetection;
+
 
 
 
