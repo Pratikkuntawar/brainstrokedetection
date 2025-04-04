@@ -866,6 +866,7 @@ const StrokeDetection = () => {
   const [predictedClass, setPredictedClass] = useState(null);
   const [confidenceScore, setConfidenceScore] = useState(null);
   const [showSummary, setShowSummary] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
 
   // Handle file selection
   const handleFileChange = (event) => {
@@ -876,6 +877,7 @@ const StrokeDetection = () => {
       setProcessedImage(null); // Clear previous processed image
       setPredictedClass(null); // Clear previous prediction
       setShowSummary(false); // Hide summary initially
+      setUploaded(false); // Reset uploaded state
     }
   };
 
@@ -908,6 +910,7 @@ const StrokeDetection = () => {
       setProcessedImage(URL.createObjectURL(blob));
       setPredictedClass(predictedClass);
       setConfidenceScore(confidenceScore);
+      setUploaded(true);
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("Error processing the image. Please try again.");
@@ -927,21 +930,26 @@ const StrokeDetection = () => {
       {/* Select Image Button */}
       <input type="file" accept="image/*" onChange={handleFileChange} />
 
-      {/* Show selected image and upload button only after selecting an image */}
+      {/* Image and Upload Button */}
       {inputImage && (
-        <>
-          <div style={{ marginTop: "10px" }}>
-            <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
-          </div>
-          <button onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
-        </>
-      )}
-
-      {/* Show both images only after upload */}
-      {processedImage && (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px" }}>
-          <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
-          <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
+        <div style={{ marginTop: "10px" }}>
+          {!uploaded ? (
+            <>
+              <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
+              <div>
+                <button onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Show both images horizontally between Select Image & Upload Button */}
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0" }}>
+                <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
+                <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
+              </div>
+              <button onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
+            </>
+          )}
         </div>
       )}
 
