@@ -857,25 +857,171 @@
 
 
 
+// import React, { useState } from "react";
+
+// const BrainStrokePrediction = () => {
+//   const [selectedFile, setSelectedFile] = useState(null);
+//   const [processedImage, setProcessedImage] = useState(null);
+//   const [predictedClass, setPredictedClass] = useState(null);
+//   const [confidenceScore, setConfidenceScore] = useState(null);
+//   const [uploaded, setUploaded] = useState(false);
+//   const [showSummary, setShowSummary] = useState(false);
+
+//   const handleFileChange = (event) => {
+//     setSelectedFile(event.target.files[0]);
+//     setProcessedImage(null);
+//     setPredictedClass(null);
+//     setConfidenceScore(null);
+//     setUploaded(false);
+//     setShowSummary(false);
+//   };
+
+//   const handleUpload = async () => {
+//     if (!selectedFile) {
+//       alert("Please select an image first.");
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append("file", selectedFile);
+
+//     try {
+//       const response = await fetch("https://final-year-pro-ut4k.onrender.com/predict/", {
+//         method: "POST",
+//         body: formData,
+//       });
+
+//       if (!response.ok) {
+//         throw new Error(`API error: ${response.status}`);
+//       }
+
+//       // ✅ Extract predicted class & confidence score from response headers
+//       const predictedClass = response.headers.get("x-predicted-class");
+//       const confidenceScore = response.headers.get("x-confidence-score");
+
+//       console.log("Predicted Class:", predictedClass);
+//       console.log("Confidence Score:", confidenceScore);
+
+//       if (!predictedClass) {
+//         alert("Prediction failed. No class received.");
+//         return;
+//       }
+
+//       const blob = await response.blob();
+//       setProcessedImage(URL.createObjectURL(blob));
+//       setPredictedClass(predictedClass.trim());
+//       setConfidenceScore(confidenceScore ? confidenceScore.trim() : "N/A");
+//       setUploaded(true);
+//     } catch (error) {
+//       console.error("Error uploading file:", error);
+//       alert("Error processing the image. Please try again.");
+//     }
+//   };
+
+//   const getClassLabel = (predictedClass) => {
+//     switch (predictedClass) {
+//       case "0":
+//         return "Hemorrhagic Stroke";
+//       case "1":
+//         return "Ischemic Stroke";
+//       case "2":
+//         return "Normal Brain";
+//       default:
+//         return "Unknown";
+//     }
+//   };
+
+//   return (
+//     <div style={{ textAlign: "center", padding: "20px" }}>
+//       <h2>Brain Stroke Detection</h2>
+
+//       {/* File Upload Input */}
+//       <input type="file" accept="image/*" onChange={handleFileChange} />
+//       <br /><br />
+
+//       {/* Upload Button */}
+//       <button onClick={handleUpload}>Upload & Predict</button>
+
+//       {/* Show Processed Image */}
+//       {uploaded && processedImage && (
+//         <div style={{ marginTop: "20px" }}>
+//           <h3>Processed Image</h3>
+//           <img src={processedImage} alt="Processed" style={{ width: "300px", border: "1px solid #ccc" }} />
+//         </div>
+//       )}
+
+//       {/* Show Predicted Class */}
+//       {predictedClass && (
+//         <div style={{ marginTop: "20px" }}>
+//           <h3>Brain Stroke Prediction: {getClassLabel(predictedClass)}</h3>
+//         </div>
+//       )}
+
+//       {/* Show "View Summary" Button */}
+//       {predictedClass && (
+//         <div style={{ marginTop: "10px" }}>
+//           <button onClick={() => setShowSummary(true)}>View Summary</button>
+//         </div>
+//       )}
+
+//       {/* Summary Table */}
+//       {showSummary && predictedClass && (
+//         <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px", display: "inline-block" }}>
+//           <h4>Summary</h4>
+//           <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
+//             <thead>
+//               <tr>
+//                 <th>Parameter</th>
+//                 <th>Value</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               <tr>
+//                 <td>Predicted Class</td>
+//                 <td>{getClassLabel(predictedClass)}</td>
+//               </tr>
+//               <tr>
+//                 <td>Confidence Score</td>
+//                 <td>{confidenceScore ? confidenceScore : "N/A"}</td>
+//               </tr>
+//             </tbody>
+//           </table>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default BrainStrokePrediction;
+
+
+
+
 import React, { useState } from "react";
 
-const BrainStrokePrediction = () => {
+const Upload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [inputImage, setInputImage] = useState(null);
   const [processedImage, setProcessedImage] = useState(null);
   const [predictedClass, setPredictedClass] = useState(null);
   const [confidenceScore, setConfidenceScore] = useState(null);
-  const [uploaded, setUploaded] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
 
+  // Handle file selection
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setProcessedImage(null);
-    setPredictedClass(null);
-    setConfidenceScore(null);
-    setUploaded(false);
-    setShowSummary(false);
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setInputImage(URL.createObjectURL(file));
+      setProcessedImage(null);
+      setPredictedClass(null);
+      setShowSummary(false);
+      setUploaded(false);
+    }
   };
 
+  // Handle file upload
   const handleUpload = async () => {
     if (!selectedFile) {
       alert("Please select an image first.");
@@ -892,25 +1038,18 @@ const BrainStrokePrediction = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      // ✅ Extract predicted class & confidence score from response headers
-      const predictedClass = response.headers.get("x-predicted-class");
-      const confidenceScore = response.headers.get("x-confidence-score");
-
-      console.log("Predicted Class:", predictedClass);
-      console.log("Confidence Score:", confidenceScore);
-
-      if (!predictedClass) {
-        alert("Prediction failed. No class received.");
-        return;
+        throw new Error(API error: ${response.status});
       }
 
       const blob = await response.blob();
+      const headers = response.headers;
+
+      const predictedClass = headers.get("x-predicted-class");
+      const confidenceScore = headers.get("x-confidence-score");
+
       setProcessedImage(URL.createObjectURL(blob));
-      setPredictedClass(predictedClass.trim());
-      setConfidenceScore(confidenceScore ? confidenceScore.trim() : "N/A");
+      setPredictedClass(predictedClass);
+      setConfidenceScore(confidenceScore);
       setUploaded(true);
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -918,54 +1057,51 @@ const BrainStrokePrediction = () => {
     }
   };
 
+  // Map predicted class to readable labels
   const getClassLabel = (predictedClass) => {
-    switch (predictedClass) {
-      case "0":
-        return "Hemorrhagic Stroke";
-      case "1":
-        return "Ischemic Stroke";
-      case "2":
-        return "Normal Brain";
-      default:
-        return "Unknown";
-    }
+    if (predictedClass === "0") return "Hemorrhagic Stroke";
+    if (predictedClass === "1") return "Ischemic Stroke";
+    if (predictedClass === "2") return "Normal Brain";
+    return "Unknown";
   };
 
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
-      <h2>Brain Stroke Detection</h2>
-
-      {/* File Upload Input */}
+      {/* Select Image Button */}
       <input type="file" accept="image/*" onChange={handleFileChange} />
-      <br /><br />
-
-      {/* Upload Button */}
-      <button onClick={handleUpload}>Upload & Predict</button>
-
-      {/* Show Processed Image */}
-      {uploaded && processedImage && (
+      
+      {/* Show Selected Image Before Upload */}
+      {inputImage && !uploaded && (
         <div style={{ marginTop: "20px" }}>
-          <h3>Processed Image</h3>
-          <img src={processedImage} alt="Processed" style={{ width: "300px", border: "1px solid #ccc" }} />
+          <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
         </div>
       )}
 
-      {/* Show Predicted Class */}
+      {/* Upload Button */}
+      {inputImage && (
+        <div style={{ marginTop: "20px" }}>
+          <button onClick={handleUpload}>Upload</button>
+        </div>
+      )}
+
+      {/* Show Images Side by Side After Upload */}
+      {inputImage && processedImage && uploaded && (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0" }}>
+          <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
+          <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
+        </div>
+      )}
+
+      {/* Predicted Class and View Summary Button */}
       {predictedClass && (
         <div style={{ marginTop: "20px" }}>
           <h3>Brain Stroke Prediction: {getClassLabel(predictedClass)}</h3>
-        </div>
-      )}
-
-      {/* Show "View Summary" Button */}
-      {predictedClass && (
-        <div style={{ marginTop: "10px" }}>
-          <button onClick={() => setShowSummary(true)}>View Summary</button>
+          <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
         </div>
       )}
 
       {/* Summary Table */}
-      {showSummary && predictedClass && (
+      {showSummary && (
         <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px", display: "inline-block" }}>
           <h4>Summary</h4>
           <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -992,10 +1128,5 @@ const BrainStrokePrediction = () => {
   );
 };
 
-export default BrainStrokePrediction;
-
-
-
-
-
+export default Upload;
 
