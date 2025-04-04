@@ -867,14 +867,19 @@ const StrokeDetection = () => {
   const [confidenceScore, setConfidenceScore] = useState(null);
   const [showSummary, setShowSummary] = useState(false);
 
+  // Handle file selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
       setInputImage(URL.createObjectURL(file)); // Show selected image
+      setProcessedImage(null); // Clear previous processed image
+      setPredictedClass(null); // Clear previous prediction
+      setShowSummary(false); // Hide summary initially
     }
   };
 
+  // Handle file upload
   const handleUpload = async () => {
     if (!selectedFile) {
       alert("Please select an image first.");
@@ -909,6 +914,7 @@ const StrokeDetection = () => {
     }
   };
 
+  // Map predicted class to readable labels
   const getClassLabel = (predictedClass) => {
     if (predictedClass === "0") return "Hemorrhagic Stroke";
     if (predictedClass === "1") return "Ischemic Stroke";
@@ -918,26 +924,38 @@ const StrokeDetection = () => {
 
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
+      {/* Select Image Button */}
       <input type="file" accept="image/*" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+
+      {/* Show selected image and upload button only after selecting an image */}
+      {inputImage && (
+        <>
+          <div style={{ marginTop: "10px" }}>
+            <img src={inputImage} alt="Selected" style={{ width: "250px", height: "250px" }} />
+          </div>
+          <button onClick={handleUpload} style={{ marginTop: "10px" }}>Upload</button>
+        </>
+      )}
 
       {/* Show both images only after upload */}
       {processedImage && (
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-          <img src={inputImage} alt="Input" style={{ width: "200px", marginRight: "20px" }} />
-          <img src={processedImage} alt="Processed" style={{ width: "200px" }} />
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px" }}>
+          <img src={inputImage} alt="Input" style={{ width: "250px", height: "250px", marginRight: "20px" }} />
+          <img src={processedImage} alt="Processed" style={{ width: "250px", height: "250px" }} />
         </div>
       )}
 
-      {/* Show predicted class and View Summary button */}
+      {/* Show prediction result & "View Summary" button after processing */}
       {predictedClass !== null && (
-        <div style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
           <h3>Result of Brain Stroke Detection: {getClassLabel(predictedClass)}</h3>
-          <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
+          <button onClick={() => setShowSummary(!showSummary)} style={{ marginLeft: "10px" }}>
+            View Summary
+          </button>
         </div>
       )}
 
-      {/* Show summary table when button is clicked */}
+      {/* Show summary table when "View Summary" is clicked */}
       {showSummary && (
         <table border="1" style={{ margin: "20px auto", width: "50%" }}>
           <thead>
@@ -963,5 +981,6 @@ const StrokeDetection = () => {
 };
 
 export default StrokeDetection;
+
 
 
