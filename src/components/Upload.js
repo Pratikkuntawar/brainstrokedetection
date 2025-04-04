@@ -860,112 +860,108 @@
 import React, { useState } from "react";
 
 const StrokeDetection = () => {
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [processedImage, setProcessedImage] = useState(null);
-    const [prediction, setPrediction] = useState(null);
-    const [confidence, setConfidence] = useState(null);
-    const [showSummary, setShowSummary] = useState(false);
-    
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setSelectedImage(URL.createObjectURL(file));
-        }
-    };
-    
-    const handleUpload = async () => {
-        if (!selectedImage) return;
-        
-        const formData = new FormData();
-        formData.append("file", selectedImage);
-        
-        try {
-            const response = await fetch("https://final-year-pro-ut4k.onrender.com/predict/?file=", {
-                method: "POST",
-                body: formData
-            });
-            
-            if (response.ok) {
-                const blob = await response.blob();
-                const processedImageUrl = URL.createObjectURL(blob);
-                setProcessedImage(processedImageUrl);
-                
-                // Extract headers for prediction data
-                const predictedClass = response.headers.get("x-predicted-class");
-                const confidenceScore = response.headers.get("x-confidence-score");
-                
-                setPrediction(predictedClass);
-                setConfidence(confidenceScore);
-            }
-        } catch (error) {
-            console.error("Error uploading file:", error);
-        }
-    };
-    
-    const getPredictionText = (predictedClass) => {
-        switch (predictedClass) {
-            case "0": return "Hemorrhagic Stroke";
-            case "1": return "Ischemic Stroke";
-            case "2": return "Normal Brain";
-            default: return "Unknown";
-        }
-    };
-    
-    return (
-        <div style={{ textAlign: "center", padding: "20px" }}>
-            <input type="file" onChange={handleImageChange} accept="image/*" />
-            <button onClick={handleUpload} disabled={!selectedImage}>Upload</button>
-            
-            {/* Show input image before upload */}
-            {selectedImage && !processedImage && (
-                <div>
-                    <h3>Selected Image:</h3>
-                    <img src={selectedImage} alt="Selected" style={{ width: "200px", height: "200px" }} />
-                </div>
-            )}
-            
-            {/* Show both images after upload */}
-            {processedImage && (
-                <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "20px" }}>
-                    <div>
-                        <h3>Input Image:</h3>
-                        <img src={selectedImage} alt="Input" style={{ width: "200px", height: "200px" }} />
-                    </div>
-                    <div>
-                        <h3>Processed Image:</h3>
-                        <img src={processedImage} alt="Processed" style={{ width: "200px", height: "200px" }} />
-                    </div>
-                </div>
-            )}
-            
-            {/* Show prediction result and view summary button */}
-            {prediction !== null && (
-                <div style={{ marginTop: "20px" }}>
-                    <h3>Result of Brain Stroke Detection: {getPredictionText(prediction)}</h3>
-                    <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
-                </div>
-            )}
-            
-            {/* Summary Table */}
-            {showSummary && (
-                <table border="1" style={{ margin: "20px auto", borderCollapse: "collapse" }}>
-                    <thead>
-                        <tr>
-                            <th>Predicted Class</th>
-                            <th>Confidence Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{getPredictionText(prediction)}</td>
-                            <td>{confidence}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            )}
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [inputImage, setInputImage] = useState(null);
+  const [processedImage, setProcessedImage] = useState(null);
+  const [predictedClass, setPredictedClass] = useState(null);
+  const [confidenceScore, setConfidenceScore] = useState(null);
+  const [showSummary, setShowSummary] = useState(false);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setInputImage(URL.createObjectURL(file)); // Show selected image
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert("Please select an image first.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await fetch("https://final-year-pro-ut4k.onrender.com/predict/", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const blob = await response.blob();
+      const headers = response.headers;
+
+      const predictedClass = headers.get("x-predicted-class");
+      const confidenceScore = headers.get("x-confidence-score");
+
+      setProcessedImage(URL.createObjectURL(blob));
+      setPredictedClass(predictedClass);
+      setConfidenceScore(confidenceScore);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Error processing the image. Please try again.");
+    }
+  };
+
+  const getClassLabel = (predictedClass) => {
+    if (predictedClass === "0") return "Hemorrhagic Stroke";
+    if (predictedClass === "1") return "Ischemic Stroke";
+    if (predictedClass === "2") return "Normal Brain";
+    return "Unknown";
+  };
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <input type="file" accept="image/*" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload</button>
+
+      {/* Show both images only after upload */}
+      {processedImage && (
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+          <img src={inputImage} alt="Input" style={{ width: "200px", marginRight: "20px" }} />
+          <img src={processedImage} alt="Processed" style={{ width: "200px" }} />
         </div>
-    );
+      )}
+
+      {/* Show predicted class and View Summary button */}
+      {predictedClass !== null && (
+        <div style={{ marginTop: "20px" }}>
+          <h3>Result of Brain Stroke Detection: {getClassLabel(predictedClass)}</h3>
+          <button onClick={() => setShowSummary(!showSummary)}>View Summary</button>
+        </div>
+      )}
+
+      {/* Show summary table when button is clicked */}
+      {showSummary && (
+        <table border="1" style={{ margin: "20px auto", width: "50%" }}>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Predicted Class</td>
+              <td>{getClassLabel(predictedClass)}</td>
+            </tr>
+            <tr>
+              <td>Confidence Score</td>
+              <td>{confidenceScore}</td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 };
 
 export default StrokeDetection;
+
 
