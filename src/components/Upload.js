@@ -1394,13 +1394,13 @@ const Upload = () => {
         <div className="result-section">
           <div className="image-display">
             <div className="image-box">
-              <h4>Input Image</h4>
               <img src={URL.createObjectURL(selectedFile)} alt="Input" className="preview-img" />
+              <h4 className="image-label">Input Image</h4>
             </div>
             {processedImage && (
               <div className="image-box">
-                <h4>Processed Image</h4>
                 <img src={processedImage} alt="Processed" className="preview-img" />
+                <h4 className="image-label">Processed Image</h4>
               </div>
             )}
           </div>
