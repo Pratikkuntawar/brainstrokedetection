@@ -1433,6 +1433,7 @@ const Upload = () => {
               <tr>
                 <td>Confidence Level</td>
                 <td>📊 {confidenceScore ? `${(parseFloat(confidenceScore) * 100).toFixed(2)}%` : "N/A"}</td>
+
               </tr>
               <tr>
                 <td>Possible Symptoms</td>
