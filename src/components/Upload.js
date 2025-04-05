@@ -1368,6 +1368,7 @@ const Upload = () => {
           <li><strong>Supported formats:</strong> JPEG, PNG</li>
           <li><strong>Required image size:</strong> 512 x 512</li>
           <li><strong>Maximum file size:</strong> 10 MB</li>
+          <li><strong>Note:</strong>Input Image must be MRI Image of Brain</li>
         </ul>
       </div>
 
@@ -1435,7 +1436,7 @@ const Upload = () => {
               </tr>
               <tr>
                 <td>Possible Symptoms</td>
-                <td>Weakness, Speech Difficulty (if applicable)</td>
+                <td>Vision Problem,Walking difficulties,Severe Headache,Sudden Numbness,etc</td>
               </tr>
               <tr>
                 <td>Suggested Next Step</td>
