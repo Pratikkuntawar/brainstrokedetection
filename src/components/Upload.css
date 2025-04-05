@@ -225,4 +225,10 @@
   margin-top: 20px;
 }
 
+.image-label {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5px;
+  font-size: 16px;
+}
 
