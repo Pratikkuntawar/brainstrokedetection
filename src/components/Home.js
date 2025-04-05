@@ -9,7 +9,7 @@ const Home = () => {
 
   const defaultDescription = `
    Brain stroke detection using machine learning provides a fast and accurate way to analyze 
-          CT scan images, helping identify early signs of a stroke. Early detection plays a crucial role 
+          MRI images, helping identify early signs of a stroke. Early detection plays a crucial role 
          in stroke management, where time is of the essence. With these technologies, medical professionals 
          can better predict, diagnose, and prevent life-threatening complications. This solution offers 
           healthcare providers real-time results, ensuring timely interventions and saving lives. With every 
@@ -19,7 +19,7 @@ const Home = () => {
 
   const smallScreenDescription = `
     Brain stroke detection using machine learning provides a fast and accurate way to analyze 
-          CT scan images, helping identify early signs of a stroke. Early detection plays a crucial role 
+          MRI images, helping identify early signs of a stroke. Early detection plays a crucial role 
          in stroke management, where time is of the essence..
   `;
 
