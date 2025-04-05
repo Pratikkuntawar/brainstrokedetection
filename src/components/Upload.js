@@ -1132,8 +1132,166 @@
 
 
 
+// import React, { useState } from "react";
+// import "./Upload.css"; // Make sure to update this CSS file for styling
+
+// const Upload = () => {
+//   const [selectedFile, setSelectedFile] = useState(null);
+//   const [processedImage, setProcessedImage] = useState(null);
+//   const [predictedClass, setPredictedClass] = useState(null);
+//   const [confidenceScore, setConfidenceScore] = useState(null);
+//   const [showSummary, setShowSummary] = useState(false);
+
+//   const handleFileChange = (event) => {
+//     setSelectedFile(event.target.files[0]);
+//     setProcessedImage(null);
+//     setPredictedClass(null);
+//     setConfidenceScore(null);
+//     setShowSummary(false);
+//   };
+
+//   const handleUpload = async () => {
+//     if (!selectedFile) {
+//       alert("Please select an image first.");
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append("file", selectedFile);
+
+//     try {
+//       const response = await fetch("https://final-year-pro-ut4k.onrender.com/predict/", {
+//         method: "POST",
+//         body: formData,
+//       });
+
+//       if (!response.ok) {
+//         throw new Error(`API error: ${response.status}`);
+//       }
+
+//       const predictedClass = response.headers.get("x-predicted-class");
+//       const confidenceScore = response.headers.get("x-confidence-score");
+
+//       if (!predictedClass) {
+//         alert("Prediction failed. No class received.");
+//         return;
+//       }
+
+//       const blob = await response.blob();
+//       setProcessedImage(URL.createObjectURL(blob));
+//       setPredictedClass(predictedClass.trim());
+//       setConfidenceScore(confidenceScore ? confidenceScore.trim() : "N/A");
+//     } catch (error) {
+//       console.error("Error uploading file:", error);
+//       alert("Error processing the image. Please try again.");
+//     }
+//   };
+
+//   const getClassLabel = (predictedClass) => {
+//     switch (predictedClass) {
+//       case "0":
+//         return "🧠 Hemorrhagic Stroke";
+//       case "1":
+//         return "🧠 Ischemic Stroke";
+//       case "2":
+//         return "🧠 Normal Brain";
+//       default:
+//         return "Unknown";
+//     }
+//   };
+
+//   return (
+//     <div className="upload-container">
+//       <h2 className="upload-title">Upload MRI Image for Analysis</h2>
+
+//       <div className="instructions">
+//         <h3>Instructions:</h3>
+//         <ul>
+//           <li><strong>Supported formats:</strong> JPEG, PNG</li>
+//           <li><strong>Required image size:</strong> 512 x 512</li>
+//           <li><strong>Maximum file size:</strong> 10 MB</li>
+//         </ul>
+//       </div>
+
+//       <div className="upload-section">
+//         <input type="file" accept="image/*" id="file-upload" onChange={handleFileChange} style={{ display: "none" }} />
+//         <button className="upload-btn" onClick={() => document.getElementById("file-upload").click()}>
+//           Select Image
+//         </button>
+
+//         {selectedFile && (
+//           <div className="image-preview">
+//             <img src={URL.createObjectURL(selectedFile)} alt="Selected" className="preview-img" />
+//           </div>
+//         )}
+
+//         {selectedFile && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+//       </div>
+
+//       {predictedClass && (
+//         <div className="result-section">
+//           <div className="image-display">
+//             <div className="image-box">
+//               <h4>Input Image</h4>
+//               <img src={URL.createObjectURL(selectedFile)} alt="Input" className="preview-img" />
+//             </div>
+//             {processedImage && (
+//               <div className="image-box">
+//                 <h4>Processed Image</h4>
+//                 <img src={processedImage} alt="Processed" className="preview-img" />
+//               </div>
+//             )}
+//           </div>
+
+//           <div className="prediction-result">
+//             <strong>Result of Brain Stroke Prediction: {getClassLabel(predictedClass)}</strong>
+//             <button className="summary-btn" onClick={() => setShowSummary(!showSummary)}>
+//               {showSummary ? "Hide Summary" : "View Summary"}
+//             </button>
+//           </div>
+//         </div>
+//       )}
+
+//       {showSummary && predictedClass && (
+//         <div className="summary-table">
+//           <h3>📝 Stroke Prediction Summary</h3>
+//           <table>
+//             <thead>
+//               <tr>
+//                 <th>Feature</th>
+//                 <th>Result / Value</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               <tr>
+//                 <td>Prediction</td>
+//                 <td>{getClassLabel(predictedClass)}</td>
+//               </tr>
+//               <tr>
+//                 <td>Confidence Level</td>
+//                 <td>📊 {confidenceScore ? confidenceScore : "N/A"}</td>
+//               </tr>
+//               <tr>
+//                 <td>Possible Symptoms</td>
+//                 <td>Weakness, Speech Difficulty (if applicable)</td>
+//               </tr>
+//               <tr>
+//                 <td>Suggested Next Step</td>
+//                 <td>🩺 Consult Neurologist / Further MRI Scan</td>
+//               </tr>
+//             </tbody>
+//           </table>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Upload;
+
+// lst chnages
 import React, { useState } from "react";
-import "./Upload.css"; // Make sure to update this CSS file for styling
+import "./Upload.css";
 
 const Upload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -1144,7 +1302,7 @@ const Upload = () => {
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
-    setProcessedImage(null);
+    setProcessedImage(null); // Clear processed image on new file selection
     setPredictedClass(null);
     setConfidenceScore(null);
     setShowSummary(false);
@@ -1219,15 +1377,19 @@ const Upload = () => {
           Select Image
         </button>
 
-        {selectedFile && (
+        {/* Show preview only if not yet uploaded */}
+        {selectedFile && !processedImage && (
           <div className="image-preview">
             <img src={URL.createObjectURL(selectedFile)} alt="Selected" className="preview-img" />
           </div>
         )}
 
-        {selectedFile && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+        {selectedFile && !processedImage && (
+          <button className="upload-btn" onClick={handleUpload}>Upload</button>
+        )}
       </div>
 
+      {/* Display both input and processed image side-by-side */}
       {predictedClass && (
         <div className="result-section">
           <div className="image-display">
